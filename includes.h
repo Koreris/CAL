@@ -14,3 +14,5 @@
 #include <utility>
 #include <cmath>
 #include <ctime>
+
+using namespace std;

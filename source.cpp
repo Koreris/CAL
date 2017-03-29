@@ -6,9 +6,17 @@
  */
 
 #include <iostream>
+#include "Dados.h"
 using namespace std;
 
 
 int main(){
-	cout << "works!";
+ Dados d;
+
+ d.loadNodesFile();
+
+ cout << "\n\n";
+
+ d.loadStreetsFile();
+
 }
