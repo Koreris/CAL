@@ -18,7 +18,14 @@ class Coordenadas
 	double yRad;
 
 public:
-	Coordenadas (){};
+	Coordenadas (long long int i, double x,double y, double x2, double y2 ){
+
+			this->id = i;
+			this->xDegrees = x;
+			this->yDegrees = y;
+			this->xRad = x2;
+			this->yRad = y2;
+	};
 
 	void setId(long long int i){this->id = i;}
 	void setxDegrees(double x){this->xDegrees = x;}

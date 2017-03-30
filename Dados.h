@@ -13,11 +13,13 @@
 
 class Dados
 {
-	vector<Coordenadas> coordsVec ;
-	vector<Estrada> streetsVec ;
+	vector<Coordenadas*> coordsVec ;
+	vector<Estrada*> streetsVec ;
 
 public:
-	Dados (){};
+	Dados (){
+
+	};
 
 	void loadNodesFile(){
 		ifstream in;
@@ -26,34 +28,36 @@ public:
 		double xdeg, ydeg, xrad, yrad;
 		stringstream is;
 		string str;
-		Coordenadas coord;
+
 
 		in.open("files/A.txt");
+
 
 
 		while(getline(in, trans_string)){
 			is.str(trans_string);
 			getline(is, str, ';');
 			id = stoll(str);
-			coord.setId(id);
+			//coord->setId(id);
 
 			getline(is, str, ';');
 			xdeg = stod(str);
-			coord.setxDegrees(xdeg);
+			//coord->setxDegrees(xdeg);
 
 			getline(is, str, ';');
 			ydeg = stod(str);
-			coord.setyDegrees(ydeg);
+			//coord->setyDegrees(ydeg);
 
 			getline(is, str, ';');
 			xrad = stod(str);
-			coord.setxRad(xrad);
+			//coord->setxRad(xrad);
 
 			getline(is, str, ';');
 			yrad = stod(str);
-			coord.setyRad(yrad);
+			//coord->setyRad(yrad);
 
-			cout << id << ";" << xdeg << ";" << ydeg << ";" << xrad << ";" << yrad << "\n";
+			//cout << id << ";" << xdeg << ";" << ydeg << ";" << xrad << ";" << yrad << "\n";
+			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg, xrad, yrad);
 			this->coordsVec.push_back(coord);
 			is.ignore();
 			is.clear();
@@ -68,7 +72,8 @@ public:
 		long long int id;
 		stringstream is;
 		string str, nome;
-		Estrada est;
+		bool dsk;
+		//Estrada * est = new Estrada();
 
 		in.open("files/B.txt");
 
@@ -77,18 +82,20 @@ public:
 			is.str(trans_string);
 			getline(is, str, ';');
 			id = stoll(str);
-			est.setId(id);
+			//est->setId(id);
 
 			getline(is, nome, ';');
-			est.setNome(nome);
+			//est->setNome(nome);
 
 			getline(is, str, ';');
-			if(str=="false")
-				est.setTwoWays(false);
-			else
-				est.setTwoWays(true);
 
-			cout << id << ";" << nome << ";" << str << "\n";
+			if (str == "True")
+				dsk = true;
+			else
+				dsk = false;
+
+			//cout << id << ";" << nome << ";" << str << "\n";
+			Estrada * est = new Estrada(id, nome, dsk);
 			this->streetsVec.push_back(est);
 			is.ignore();
 			is.clear();
@@ -99,8 +106,8 @@ public:
 	}
 
 
-	vector<Coordenadas> getCoordsVec(){return this->coordsVec;}
-	vector<Estrada> getStreetsVec(){return this->streetsVec;}
+	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
+	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
 
 };
 

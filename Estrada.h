@@ -18,7 +18,11 @@ class Estrada
 
 
 public:
-	Estrada (){};
+	Estrada (long long int i, string n, bool t){
+		this->id = i;
+		this->nome = n;
+		this->twoways = t;
+	};
 
 	void setId(long long int i){this->id = i;}
 	void setNome(string n){this->nome = n;}
