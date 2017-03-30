@@ -12,40 +12,30 @@ using namespace std;
 
 
 int main(){
- Dados d;
 
- d.loadNodesFile();
+Dados  novo ;
 
- cout << "\n\n";
-
- d.loadStreetsFile();
-
-
-
-Dados novo;
+novo.loadNodesFile();
 
 Graph<Coordenadas*> exp  ;
 
-cout << novo.getCoordsVec()[1]->getId() << endl;
+
+for (int i = 0; i < novo.getCoordsVec().size(); i++)
+{
+	//cout << novo.getCoordsVec()[i]->getId() << endl;
+	}
 
 
-	//cout << novo.getCoordsVec().size() << endl;
-
-
-
-/*
-exp.addVertex(novo.getCoordsVec().at(0));
+exp.addVertex(novo.getCoordsVec()[0]);
 exp.addVertex(novo.getCoordsVec()[1]);
-exp.addVertex(novo.getCoordsVec()[2]);*/
+exp.addVertex(novo.getCoordsVec()[2]);
 
 
+Vertex<Coordenadas*> *no = exp.getVertex(novo.getCoordsVec()[1]);
 
-//Vertex<Coordenadas*> *no = exp.getVertex(novo.getCoordsVec()[1]);
+cout << exp.getVertexSet().size() << " nós inseridos" << endl;
 
-//cout << exp.getVertexSet().size() << endl;
-//cout << no->getInfo()->getId();
-
-
+cout << "o id do segundo no e " << no->getInfo()->getId();
 
 
 }

@@ -34,10 +34,10 @@ public:
 	void setyRad(double y){this->yRad = y;}
 
 	long long int getId(){return this->id;}
-	double getxDegrees(double x){return this->xDegrees;}
-	double getyDegrees(double y){return this->yDegrees;}
-	double getxRad(double x){return this->xRad;}
-	double getyRad(double y){return this->yRad;}
+	double getxDegrees(){return this->xDegrees;}
+	double getyDegrees(){return this->yDegrees;}
+	double getxRad(){return this->xRad;}
+	double getyRad(){return this->yRad;}
 
 };
 

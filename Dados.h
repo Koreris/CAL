@@ -8,6 +8,7 @@
 #include "Estrada.h"
 #include "includes.h"
 
+
 #ifndef DADOS_H_
 #define DADOS_H_
 
@@ -31,8 +32,6 @@ public:
 
 
 		in.open("files/A.txt");
-
-
 
 		while(getline(in, trans_string)){
 			is.str(trans_string);
@@ -58,7 +57,9 @@ public:
 
 			//cout << id << ";" << xdeg << ";" << ydeg << ";" << xrad << ";" << yrad << "\n";
 			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg, xrad, yrad);
+			//cout << coord->getId() << ";" << coord->getxDegrees() << ";" << coord->getyDegrees() << ";" << coord->getxRad()<< ";" << coord->getyRad() << "\n";
 			this->coordsVec.push_back(coord);
+
 			is.ignore();
 			is.clear();
 		}
