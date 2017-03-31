@@ -39,6 +39,14 @@ public:
 	double getxRad(){return this->xRad;}
 	double getyRad(){return this->yRad;}
 
+	bool operator==(const Coordenadas& other) // copy assignment
+	{
+		if(this->id == other.id)
+			return true;
+		else
+			return false;
+	}
+
 };
 
 

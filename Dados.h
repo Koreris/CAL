@@ -7,7 +7,8 @@
 #include "Coordenadas.h"
 #include "Estrada.h"
 #include "includes.h"
-
+#include "Graph.h"
+#include "Haversine.h"
 
 #ifndef DADOS_H_
 #define DADOS_H_
@@ -74,7 +75,6 @@ public:
 		stringstream is;
 		string str, nome;
 		bool dsk;
-		//Estrada * est = new Estrada();
 
 		in.open("files/B.txt");
 
@@ -83,10 +83,8 @@ public:
 			is.str(trans_string);
 			getline(is, str, ';');
 			id = stoll(str);
-			//est->setId(id);
 
 			getline(is, nome, ';');
-			//est->setNome(nome);
 
 			getline(is, str, ';');
 
@@ -95,15 +93,63 @@ public:
 			else
 				dsk = false;
 
-			//cout << id << ";" << nome << ";" << str << "\n";
-			Estrada * est = new Estrada(id, nome, dsk);
-			this->streetsVec.push_back(est);
+			cout << id << ";" << nome << ";" << str << "\n";
+			this->streetsVec.push_back(new Estrada(id, nome, dsk));
 			is.ignore();
 			is.clear();
 		}
+	}
 
-		in.close();
+	Coordenadas* findCoord(long long c){
+		for (int i = 0; i < this->coordsVec.size(); ++i) {
+			if(this->coordsVec[i]->getId() == c)
+				return this->coordsVec[i];
+		}
 
+		return NULL;
+	}
+
+	void CreateNodes(Graph<Coordenadas*> &grf, long long int streetid, long long int nodeid, long long int adjnodeid) {
+		Coordenadas *A=this->findCoord(nodeid), *B=this->findCoord(adjnodeid);
+
+		if(A != NULL && B != NULL){
+			grf.addVertex(A);
+			grf.addVertex(B);
+
+			grf.addEdge(A,B, distanceEarth(A->xDegrees, A->yDegrees, B->xDegrees, B->yDegrees)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+		}
+		else
+			return;
+	}
+
+	void loadConnectorsFile(Graph<Coordenadas*> &grf){
+			ifstream in;
+			string trans_string;
+			long long int streetid, nodeid, adjnodeid;
+			stringstream is;
+			string str, nome;
+
+			in.open("files/C.txt");
+
+
+			while(getline(in, trans_string)){
+				is.str(trans_string);
+				getline(is, str, ';');
+				streetid = stoll(str);
+
+				getline(is, str, ';');
+				nodeid = stoll(str);
+
+				getline(is, str, ';');
+				adjnodeid = stoll(str);
+
+				cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+
+				CreateNodes(grf, streetid, nodeid, adjnodeid);
+
+				is.ignore();
+				is.clear();
+			}
 	}
 
 
