@@ -1,4 +1,5 @@
 /*
+ /*
  * Graph.h
  */
 #ifndef GRAPH_H_
@@ -39,6 +40,8 @@ public:
 
 	T getInfo() const;
 	int getIndegree() const;
+
+	vector<Edge<T> > getadj(){return this->adj;};
 
 	Vertex* path;
 
@@ -94,6 +97,7 @@ class Edge {
 	double weight;
 public:
 	Edge(Vertex<T> *d, double w);
+	Vertex<T>* getdest(){return this->dest;};
 	friend class Graph<T>;
 	friend class Vertex<T>;
 };
