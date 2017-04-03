@@ -9,10 +9,12 @@
 #define HAVERSINE_H_
 
 #include <cmath>
-#define pi 3.14159265358979323846
 #define earthRadiusKm 6371.0
-
+//#define PI 3.14159265358979323846
 // This function converts decimal degrees to radians
+const double pi = 3.14159265358979323846;
+
+
 double deg2rad(double deg) {
   return (deg * pi / 180);
 }

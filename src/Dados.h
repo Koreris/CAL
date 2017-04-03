@@ -6,9 +6,9 @@
  */
 #include "Coordenadas.h"
 #include "Estrada.h"
-#include "includes.h"
 #include "Graph.h"
 #include "Haversine.h"
+#include "graphviewer.h"
 
 #ifndef DADOS_H_
 #define DADOS_H_
@@ -19,12 +19,20 @@ class Dados
 	vector<Estrada*> streetsVec ;
 	vector<Coordenadas*> hospitais;
 	vector<Coordenadas*> bombeiros;
-
+	GraphViewer *gv;
+	long int streetids=0;
 
 public:
-	Dados (){
 
+	Dados(GraphViewer *gv){
+		this->gv = gv;
+		gv->createWindow(1000, 800);
+
+		gv->defineVertexColor("blue");
+
+		gv->defineEdgeColor("black");
 	};
+
 
 	void setHospital(Coordenadas *h){this->hospitais.push_back(h);}
 	vector<Coordenadas*> getHospitais(){
@@ -45,7 +53,11 @@ public:
 		string str;
 
 
-		in.open("files/A.txt");
+		in.open("src/files/A.txt");
+		if(!in.is_open()){
+			cout <<"File A.txt couldn't be found\n";
+			return;
+		}
 
 		while(getline(in, trans_string)){
 			is.str(trans_string);
@@ -90,7 +102,7 @@ public:
 		string str, nome;
 		bool dsk;
 
-		in.open("files/B.txt");
+		in.open("src/files/B.txt");
 
 
 		while(getline(in, trans_string)){
@@ -128,9 +140,13 @@ public:
 
 		if(A != NULL && B != NULL){
 			grf.addVertex(A);
+			gv->addNode(nodeid);
 			grf.addVertex(B);
+			gv->addNode(adjnodeid);
 
 			grf.addEdge(A,B, distanceEarth(A->getxDegrees(), A->getyDegrees(), B->getxDegrees(), B->getyDegrees())); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+
+			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
 
 			if(grf.getVertex(A)->getadj().size() != 0){
 				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
@@ -148,7 +164,7 @@ public:
 			stringstream is;
 			string str, nome;
 
-			in.open("files/C.txt");
+			in.open("src/files/C.txt");
 
 
 			while(getline(in, trans_string)){
@@ -162,13 +178,14 @@ public:
 				getline(is, str, ';');
 				adjnodeid = stoll(str);
 
-				//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+				cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
 
 				CreateNodes(grf, streetid, nodeid, adjnodeid);
 
 				is.ignore();
 				is.clear();
 			}
+			gv->rearrange();
 	}
 
 
