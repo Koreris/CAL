@@ -9,6 +9,7 @@
 #include "Graph.h"
 #include "includes.h"
 #include "graphviewer.h"
+#define sleep(a) Sleep(a * 1000)
 
 #ifndef DADOS_H_
 #define DADOS_H_
@@ -36,6 +37,58 @@ public:
 
 		gv->defineEdgeColor("black");
 	};
+
+	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
+	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
+
+	void dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2 )
+	{
+		unsigned int i = 0, j = 0, k = 0, m = 0;
+		vector<Vertex<Coordenadas*>> tmp;
+
+		for ( i = 0; i < grf.getVertexSet().size(); i++)
+				if (grf.getVertexSet()[i]->getInfo()->getId() == nodeid1 )
+				{
+					grf.dijkstraShortestPath(grf.getVertexSet()[i]->getInfo());
+				}
+
+		for ( j = 0; j < grf.getVertexSet().size(); j++)
+				if (grf.getVertexSet()[j]->getInfo()->getId() == nodeid2 )
+					{
+					tmp.push_back(grf.getVertexSet()[j]->getInfo());
+					break;
+					}
+
+		while (grf.getVertexSet()[j]->path->getInfo()->getId() != nodeid1)
+		{
+
+				for ( k = 0; k  <  grf.getVertexSet().size() ; k++)
+				{
+					if (grf.getVertexSet()[k]->getInfo()->getId() == grf.getVertexSet()[j]->path->getInfo()->getId() ){
+						tmp.push_back(grf.getVertexSet()[k]->getInfo());
+						j = k;
+					}
+				}
+		}
+		tmp.push_back(grf.getVertexSet()[j]->path->getInfo());
+
+		reverse(tmp.begin(), tmp.end());
+		cout << "Trajeto mais curto desde " << nodeid1 << " ate "  << nodeid2 << " : " << endl;
+		for ( m = 0; m < tmp.size(); m++ )
+		{
+			cout << " " << tmp[m].getInfo()->getId() << " - " ;
+
+			gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
+
+			gv->rearrange();
+
+			sleep(0.3);
+
+		}
+
+
+
+	}
 
 
 	void setHospital(Coordenadas *h){this->hospitais.push_back(h);}
@@ -219,8 +272,7 @@ public:
 	}
 
 
-	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
-	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
+
 
 };
 

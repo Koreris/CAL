@@ -7,7 +7,7 @@
 #include <vector>
 #include <queue>
 #include <list>
-#include <limits>
+#include <climits>
 #include <cmath>
 using namespace std;
 

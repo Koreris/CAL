@@ -12,6 +12,7 @@
 
 
 int main(){
+	int i = 0, j = 0;
 
 	GraphViewer *gv = new GraphViewer(600, 600, false);
 	Dados *novo = new Dados(gv);
@@ -23,13 +24,11 @@ int main(){
 	novo->loadConnectorsFile(exp);
 
 
+	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
 
-	 cout << "A dist1 e " << exp.getVertexSet()[10]->getDist() << endl;
+	novo->dijkstraAnimation(exp, 120, 421);
 
-	exp.dijkstraShortestPath(exp.getVertexSet()[0]->getInfo());
-
-	cout << "A dist1 e " << exp.getVertexSet()[100]->getDist() << endl;
-
+	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
 
 
 	getchar();
