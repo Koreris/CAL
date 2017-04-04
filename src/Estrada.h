@@ -12,23 +12,23 @@
 
 class Estrada
 {
-	long long int id;
+	long int id;
 	string nome;
 	bool twoways;
 
 
 public:
-	Estrada (long long int i, string n, bool t){
+	Estrada (long int i, string n, bool t){
 		this->id = i;
 		this->nome = n;
 		this->twoways = t;
 	};
 
-	void setId(long long int i){this->id = i;}
+	void setId(long int i){this->id = i;}
 	void setNome(string n){this->nome = n;}
 	void setTwoWays(bool t){this->twoways = t;}
 
-	long long int getId(){return this->id;}
+	long int getId(){return this->id;}
 	string getNome(){return this->nome;}
 	bool getTwoWays(){return this->twoways;}
 

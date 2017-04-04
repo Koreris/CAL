@@ -11,33 +11,27 @@
 
 class Coordenadas
 {
-	long long int id;
-	double xDegrees;
-	double yDegrees;
-	double xRad;
-	double yRad;
+	long int id;
+	int x;
+	int y;
 
 public:
-	Coordenadas (long long int i, double x,double y, double x2, double y2 ){
+	Coordenadas ( long int i, int x, int y){
 
 			this->id = i;
-			this->xDegrees = x;
-			this->yDegrees = y;
-			this->xRad = x2;
-			this->yRad = y2;
+			this->x = x;
+			this->y = y;
 	};
 
-	void setId(long long int i){this->id = i;}
-	void setxDegrees(double x){this->xDegrees = x;}
-	void setyDegrees(double y){this->yDegrees = y;}
-	void setxRad(double x){this->xRad = x;}
-	void setyRad(double y){this->yRad = y;}
+	void setId(long int i){this->id = i;}
+	void setx(int x){this->x = x;}
+	void sety(int y){this->y = y;}
 
-	long long int getId(){return this->id;}
-	double getxDegrees(){return this->xDegrees;}
-	double getyDegrees(){return this->yDegrees;}
-	double getxRad(){return this->xRad;}
-	double getyRad(){return this->yRad;}
+
+	long int getId(){return this->id;}
+	int getx(){return this->x;}
+	int gety(){return this->y;}
+
 
 	bool operator==(const Coordenadas& other) // copy assignment
 	{

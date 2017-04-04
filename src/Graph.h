@@ -1,5 +1,4 @@
 /*
- /*
  * Graph.h
  */
 #ifndef GRAPH_H_
@@ -9,6 +8,7 @@
 #include <queue>
 #include <list>
 #include <limits>
+
 using namespace std;
 
 template <class T> class Edge;

@@ -7,6 +7,7 @@
 #include "Coordenadas.h"
 #include "Estrada.h"
 #include "Graph.h"
+#include "includes.h"
 #include "Haversine.h"
 #include "graphviewer.h"
 
@@ -23,6 +24,10 @@ class Dados
 	long int streetids=0;
 
 public:
+
+	double distancia( Coordenadas* a, Coordenadas* b){
+	       return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
+	}
 
 	Dados(GraphViewer *gv){
 		this->gv = gv;
@@ -48,7 +53,7 @@ public:
 		ifstream in;
 		string trans_string;
 		long long int id;
-		double xdeg, ydeg, xrad, yrad;
+		int xdeg, ydeg;
 		stringstream is;
 		string str;
 
@@ -65,26 +70,21 @@ public:
 			id = stoll(str);
 
 			getline(is, str, ';');
-			xdeg = stod(str);
+			xdeg = stoi(str);
 
 			getline(is, str, ';');
-			ydeg = stod(str);
+			ydeg = stoi(str);
 
-			getline(is, str, ';');
-			xrad = stod(str);
 
-			getline(is, str, ';');
-			yrad = stod(str);
+			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg);
 
-			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg, xrad, yrad);
-
-			if(id == 4378186376 || id == 1724272859 || id == 3573235293)
+			if(id == 523 || id == 313 || id == 196)
 				this->setHospital(coord);
 
-			if(id == 3116927841 || id == 3570149421)
+			if(id == 434 || id == 758)
 				this->setBombeiros(coord);
 
-			//cout << coord->getId() << ";" << coord->getxDegrees() << ";" << coord->getyDegrees() << ";" << coord->getxRad()<< ";" << coord->getyRad() << "\n";
+			//cout << coord->getId() << ";" << coord->getx() << ";" << coord->gety() << "\n";
 			this->coordsVec.push_back(coord);
 
 			is.ignore();
@@ -103,7 +103,10 @@ public:
 		bool dsk;
 
 		in.open("src/files/B.txt");
-
+		if(!in.is_open()){
+			cout <<"File B.txt couldn't be found\n";
+			return;
+		}
 
 		while(getline(in, trans_string)){
 			is.str(trans_string);
@@ -124,10 +127,12 @@ public:
 			is.ignore();
 			is.clear();
 		}
+
+		in.close();
 	}
 
-	Coordenadas* findCoord(long long c){
-		for (int i = 0; i < this->coordsVec.size(); ++i) {
+	Coordenadas* findCoord(long int c){
+		for (unsigned int i = 0; i < this->coordsVec.size(); ++i) {
 			if(this->coordsVec[i]->getId() == c)
 				return this->coordsVec[i];
 		}
@@ -135,23 +140,45 @@ public:
 		return NULL;
 	}
 
-	void CreateNodes(Graph<Coordenadas*> &grf, long long int streetid, long long int nodeid, long long int adjnodeid) {
+	Estrada* findStreet(long int c){
+		for (unsigned int i = 0; i < this->streetsVec.size(); ++i) {
+			if(this->streetsVec[i]->getId() == c)
+				return this->streetsVec[i];
+		}
+
+		return NULL;
+	}
+
+	void CreateNodes(Graph<Coordenadas*> &grf, long int streetid, long int nodeid, long int adjnodeid) {
 		Coordenadas *A=this->findCoord(nodeid), *B=this->findCoord(adjnodeid);
 
 		if(A != NULL && B != NULL){
 			grf.addVertex(A);
-			gv->addNode(nodeid);
+			gv->addNode(nodeid, A->getx(), A->gety());
 			grf.addVertex(B);
-			gv->addNode(adjnodeid);
+			gv->addNode(adjnodeid, B->getx(), B->gety());
 
-			grf.addEdge(A,B, distanceEarth(A->getxDegrees(), A->getyDegrees(), B->getxDegrees(), B->getyDegrees())); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
 
-			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+			if(this->findStreet(streetid))
+				gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+			else
+				gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::DIRECTED);
 
-			if(grf.getVertex(A)->getadj().size() != 0){
-				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
-				cout << grf.getVertex(A)->getadj()[0].getdest()->getInfo()->getId();
-			cout << "\n\n";}
+//			if(grf.getVertex(A)->getadj().size() != 0){
+//				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
+//				cout << grf.getVertex(A)->getadj()[0].getdest()->getInfo()->getId();
+//			cout << "\n\n";}
+
+			if(nodeid == 523 || nodeid == 313 || nodeid == 196)
+				gv->setVertexColor(nodeid, "red");
+			else if(adjnodeid == 523 || adjnodeid == 313 || adjnodeid == 196)
+				gv->setVertexColor(adjnodeid, "red");
+
+			if(nodeid == 434 || nodeid == 758)
+				gv->setVertexColor(nodeid, "green");
+			else if(adjnodeid == 434 || adjnodeid == 758)
+				gv->setVertexColor(adjnodeid, "green");
 		}
 		else
 			return;
@@ -165,7 +192,10 @@ public:
 			string str, nome;
 
 			in.open("src/files/C.txt");
-
+			if(!in.is_open()){
+				cout <<"File C.txt couldn't be found\n";
+				return;
+			}
 
 			while(getline(in, trans_string)){
 				is.str(trans_string);
@@ -186,6 +216,7 @@ public:
 				is.clear();
 			}
 			gv->rearrange();
+			in.close();
 	}
 
 

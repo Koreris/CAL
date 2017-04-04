@@ -11,17 +11,17 @@
  using namespace std;
 
 
- int main(){
+int main(){
 
- GraphViewer *gv = new GraphViewer(600, 600, true);
- Dados *novo = new Dados(gv);
+	GraphViewer *gv = new GraphViewer(600, 600, false);
+	Dados *novo = new Dados(gv);
 
- novo->loadNodesFile();
- novo->loadStreetsFile();
+	novo->loadNodesFile();
+	novo->loadStreetsFile();
 
- Graph<Coordenadas*> exp;
-novo->loadConnectorsFile(exp);
+	Graph<Coordenadas*> exp;
+	novo->loadConnectorsFile(exp);
 
-getchar();
+	getchar();
 
- }
+}

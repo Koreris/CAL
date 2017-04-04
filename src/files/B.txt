@@ -1,143 +1,85 @@
-14334161;Largo Soares dos Reis;False
-14334234;Avenida de Camilo;False
-14334249;Rua de António Granjo;False
-14334291;Rua de António Carneiro;False
-14334376;Travessa de Fernão de Magalhães;False
-31720870;Rua de Miraflor;False
-31721016;Rua da Estação;False
-31721081;Rua do Heroísmo;False
-35331293;Rua do Freixo;False
-35383635;Rua de Barros Lima;False
-42743767;Rua de Gomes Leal;False
-42743770;Rua do Monte do Bonfim;False
-42743772;Rua das Eirinhas;False
-42744003;Rua de Justino Teixeira;False
-44093324;Rua de Godim;False
-44093325;Rua de São Rosendo;False
-44093328;Rua do Conselheiro Correia de Barros;False
-44094125;Rua do Monte da Estação;False
-44094128;Travessa Nova da Estação;False
-44094131;Travessa do Monte da Estação;False
-44095082;Travessa da Lomba;False
-44095084;Rua do Lourenço;False
-44095086;;False
-44095088;Rua de Frei Heitor Pinto;False
-44157245;Rua da Formiga;False
-44157246;Rua da Presa Velha;False
-44157248;Rua Novais da Cunha;False
-44157249;;False
-44157410;Travessa da Formiga;False
-125150859;Largo da Estação;False
-125150860;Largo da Estação;False
-125513760;Largo da Estação;False
-125513761;Rua Pinto Bessa;False
-125513762;Rua de Justino Teixeira;False
-125513764;Rua de Justino Teixeira;False
-125513768;;False
-125513771;;False
-125513772;;False
-125513773;;False
-142213955;;False
-142213956;Rua do Freixo;False
-142213957;;False
-173372579;Rua de Vera Cruz;False
-173372583;Rua do Padre António Vieira;False
-173372586;Rua da Lomba;False
-194846905;;True
-194847542;;True
-194847817;;True
-207634514;;False
-207634520;Rua de Justino Teixeira;False
-207634521;Rua Pinto Bessa;False
-210073245;Avenida de Camilo;False
-210073256;Rua do Doutor Sousa Avides;False
-210073282;;False
-210073284;;True
-210073286;;True
-291331346;Travessa de Nova Sintra;False
-298568012;Largo Soares dos Reis;False
-298838091;Rua de Frei Heitor Pinto;False
-368009830;Travessa de Nova Sintra;False
-368009831;Rua da Formiga;False
-368009832;Rua da Formiga;False
-368010882;Travessa de Miraflor;False
-391814310;;False
-391814311;;False
-391814312;;False
-391839882;Calçada de Godim;False
-391839895;Rua de Ferreira Cardoso;False
-391839898;Rua de Justino Teixeira;False
-391839899;Rua de Justino Teixeira;False
-391839900;Rua do Bonfim;False
-391839901;Rua do Bonfim;False
-391839902;Rua do Bonfim;False
-391839905;Rua do Bonfim;False
-391839907;Rua do Bonfim;False
-391839908;Rua do Bonfim;False
-391839909;Rua do Bonfim;False
-391839910;Rua do Bonfim;False
-391839911;Rua do Bonfim;False
-391839939;;False
-432472358;Rua do Barão de Nova Sintra;False
-434896885;Largo da Estação;False
-434896892;Largo da Estação;False
-434897752;Rua da Estação;False
-447248044;Rua das Eirinhas;False
-447248047;;False
-447248049;;False
-447248051;;False
-447248053;;False
-448195860;Rua de Silva Pereira;False
-448195861;Travessa de Vera Cruz;False
-448824904;;False
-448824907;Travessa de Pinto Bessa;False
-448867770;Rua Pinto Bessa;False
-448867772;Rua do Bonfim;False
-448867775;Rua do Bonfim;False
-448867778;Rua Pinto Bessa;False
-453840037;Rua do Bairro do Bom Retiro;False
-461937901;;False
-462847850;;False
-462847851;;False
-462847852;;False
-462847853;;False
-482312806;;False
-482312810;;False
-482312811;;False
-482316438;;False
-482316447;;False
-482316448;;False
-482316451;;False
-482316459;;False
-482316463;Rua de Godim;True
-482316464;Largo de Godim;True
-482316465;Rua de Godim;False
-482316795;;False
-482316797;;False
-482316798;;False
-482318527;Rua da Lomba;False
-482318528;Rua de Vera Cruz;False
-482318529;Rua de Barros Lima;False
-482327701;Rua do Bonfim;False
-482557484;;False
-482557492;;False
-482557522;;False
-482557523;;False
-482557524;;False
-482557526;;False
-482557527;;False
-482557534;;False
-482557536;;False
-482561023;;False
-482561024;;False
-482561026;;False
-482561027;;False
-482561047;;False
-482561048;;False
-482561049;;False
-482561050;;False
-482561051;;False
-482561064;;False
-482561068;;False
-482561071;;False
-482561072;;False
+1;Rua 25 de Abril;False;;
+10;Rua do Ermo;False;;
+17;Rua da Fonte da Chamusca;False;;
+19;Rua do Toural;False;;
+36;Rua do Centro Social São Salvador;False;;
+55;Rua da Farrapa;False;;
+78;Travessa da Farrapa;False;;
+85;Rua Cardoso Pinto;False;;
+99;;False;;
+102;Rua Alminhas do Curral;False;;
+118;Rua da Associação Desportiva;False;;
+124;;False;;
+129;Rua da Porfia;False;;
+161;Rua Senhor do Padrão;False;;
+165;;False;;
+166;;False;;
+167;Travessa Américo de Oliveira;False;;
+173;;False;;
+176;;False;;
+177;Rua Cruz de Bico;False;;
+183;;False;;
+186;Rua dos Canaviais;False;;
+221;;False;;
+224;Rua da Carriça;False;;
+244;Travessa da Porfia;False;;
+259;Rua do Loureiro de Cima;False;;
+273;Travessa da Carriça;False;;
+277;;False;;
+280;Rua da Cruz do Loureiro;False;;
+285;Rua da Carreira da Presa;False;;
+291;;False;;
+303;Largo da Associação;False;;
+305;Rua de Canas;False;;
+311;;False;;
+312;Travessa dos Canaviais;False;;
+320;Travessa do Loureiro de Cima;False;;
+323;;False;;
+324;;False;;
+329;;False;;
+344;Rua do Buraco;False;;
+354;;False;;
+358;;False;;
+361;;False;;
+371;;False;;
+376;Travessa da Própria;False;;
+378;;False;;
+380;;False;;
+385;Rua da Lavandeira;False;;
+403;;False;;
+419;;False;;
+427;Rua do Loureiro de Baixo;False;;
+474;;False;;
+477;;False;;
+481;Rua da Lagoa;False;;
+498;;False;;
+502;Rua da Lagoínha;False;;
+515;;False;;
+516;;False;;
+518;;False;;
+521;;False;;
+525;;False;;
+530;;False;;
+535;;False;;
+545;;False;;
+556;;False;;
+572;;False;;
+586;;False;;
+590;Rua do Ermo;False;;
+591;Rua do Ermo;False;;
+599;;False;;
+609;Rua Senhor do Padrão;False;;
+610;Rua Senhor do Padrão;False;;
+638;Rua de Palhais;False;;
+640;Rua da Figueirinha;False;;
+653;Rua das Pedrosas;False;;
+673;Rua da Fonte da Chamusca;False;;
+680;Rua Escola do Loureiro;False;;
+682;Travessa da Azenha;False;;
+692;;False;;
+694;;False;;
+697;Rua Júlio Dinis;False;;
+702;Rua da Morgadinha;False;;
+711;;False;;
+714;Autoestrada do Norte;False;IP 1,A 1,E 01;road
+757;Autoestrada do Norte;False;IP 1,A 1,E 01;road
