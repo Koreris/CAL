@@ -8,7 +8,6 @@
 #include "Estrada.h"
 #include "Graph.h"
 #include "includes.h"
-#include "Haversine.h"
 #include "graphviewer.h"
 
 #ifndef DADOS_H_
