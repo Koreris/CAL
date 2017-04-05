@@ -21,12 +21,13 @@ int main(){
 	novo->loadStreetsFile();
 
 	Graph<Coordenadas*> exp;
+
 	novo->loadConnectorsFile(exp);
 
 
 	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
 
-	novo->dijkstraAnimation(exp, 120, 421);
+	novo->dijkstraAnimation(exp, 120, 122);
 
 	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
 

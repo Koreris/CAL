@@ -44,6 +44,7 @@ public:
 	void dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2 )
 	{
 		unsigned int i = 0, j = 0, k = 0, m = 0;
+		double dist = 0;
 		vector<Vertex<Coordenadas*>> tmp;
 
 		for ( i = 0; i < grf.getVertexSet().size(); i++)
@@ -56,6 +57,7 @@ public:
 				if (grf.getVertexSet()[j]->getInfo()->getId() == nodeid2 )
 					{
 					tmp.push_back(grf.getVertexSet()[j]->getInfo());
+					dist = grf.getVertexSet()[j]->getDist();
 					break;
 					}
 
@@ -85,6 +87,9 @@ public:
 			sleep(0.3);
 
 		}
+		cout << endl <<  "Distância: " << dist << endl;
+
+
 
 
 
@@ -231,6 +236,11 @@ public:
 				gv->setVertexColor(nodeid, "green");
 			else if(adjnodeid == 434 || adjnodeid == 758)
 				gv->setVertexColor(adjnodeid, "green");
+
+			if(nodeid == 189 )
+				gv->setVertexColor(nodeid, "pink");
+			else if(adjnodeid ==189 )
+				gv->setVertexColor(adjnodeid, "pink");
 		}
 		else
 			return;
@@ -260,7 +270,7 @@ public:
 				getline(is, str, ';');
 				adjnodeid = stoll(str);
 
-				cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+				//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
 
 				CreateNodes(grf, streetid, nodeid, adjnodeid);
 
