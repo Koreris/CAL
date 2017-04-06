@@ -257,13 +257,10 @@ int estacaoMaisProxima(int local,int tipo, Dados* n)
 		break;
 	case 2:
 		//saude
-	/*{
-		vector<Coordenadas *> b=n->getBombeiros();
+	/*{//usar grafo e ver pelos ids
 		int maisProximoB=0;
-		Coordenadas* localCoords=n->getCoordsVec()[local-1];
 		for(int i=0; i<b.size(); i++)
 		{
-			if(b[i]->)
 		}
 	}*/
 	break;
@@ -316,9 +313,9 @@ int main()
 			break;
 
 		case estVazioPGrafo:
+			novo->doDikstra(exp, idLocal);
 			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, novo);
 			/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
-			novo->dijkstraAnimation(exp, idLocal, idEstacao);
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
 				switch(gravidade){
 							case 1:
@@ -334,6 +331,7 @@ int main()
 								//muito grave,ambulancia vai para hospital mais proximo
 								//calc closest hospital
 								//idFinal=closest_hospital_id;
+								//verficar distancias
 								//novo->dijkstraAnimation(exp,idLocal,idFinal);
 								break;
 			    }

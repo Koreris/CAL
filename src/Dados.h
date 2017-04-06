@@ -23,11 +23,12 @@ class Dados
 	vector<Coordenadas*> policias;
 	GraphViewer *gv;
 	long int streetids=0;
+	int pos;
 
 public:
 
 	double distancia( Coordenadas* a, Coordenadas* b){
-	       return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
+		return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
 	}
 
 	Dados(GraphViewer *gv){
@@ -41,6 +42,18 @@ public:
 
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
+
+	void doDikstra (Graph<Coordenadas*> &grf, long int nodeid)
+	{
+		unsigned int i = 0;
+
+		for ( i = 0; i < grf.getVertexSet().size(); i++)
+			if (grf.getVertexSet()[i]->getInfo()->getId() == nodeid )
+			{
+				grf.dijkstraShortestPath(grf.getVertexSet()[i]->getInfo());
+				this->pos=i;
+			}
+	}
 
 	int dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2)
 	{
@@ -121,9 +134,9 @@ public:
 	}
 
 	void setPolicias(Coordenadas *h){this->policias.push_back(h);}
-		vector<Coordenadas*> getPolicias(){
-			return this->policias;
-		}
+	vector<Coordenadas*> getPolicias(){
+		return this->policias;
+	}
 
 	void loadNodesFile(){
 		ifstream in;
@@ -154,14 +167,14 @@ public:
 
 			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg);
 
-			if(id == 523 || id == 313 || id == 196)
+			if(id == 523 || id == 313)
 				this->setHospital(coord);
 
-			if(id == 434 || id == 758)
+			if(id == 144 || id == 642)
 				this->setBombeiros(coord);
 
-			if(id == 189)
-				this->setPolicias(coord);
+			if(id == 434 || id == 165)
+				this->setBombeiros(coord);
 
 			//cout << coord->getId() << ";" << coord->getx() << ";" << coord->gety() << "\n";
 			this->coordsVec.push_back(coord);
@@ -234,71 +247,139 @@ public:
 		if(A != NULL && B != NULL){
 			grf.addVertex(A);
 			gv->addNode(nodeid, A->getx(), A->gety());
+			gv->setVertexIcon(nodeid, "src/files/house.png");
 			grf.addVertex(B);
 			gv->addNode(adjnodeid, B->getx(), B->gety());
+			gv->setVertexIcon(adjnodeid, "src/files/house.png");
+
 
 			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
-			grf.addEdge(B,A, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(B,A, this->distancia(A,B));
+
+
 
 			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
 
-//			if(grf.getVertex(A)->getadj().size() != 0){
-//				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
-//				cout << grf.getVertex(A)->getadj()[0].getdest()->getInfo()->getId();
-//			cout << "\n\n";}
+			loadImages(grf, nodeid, adjnodeid);
 
-			if(nodeid == 523 || nodeid == 313 || nodeid == 196)
-				gv->setVertexColor(nodeid, "red");
-			else if(adjnodeid == 523 || adjnodeid == 313 || adjnodeid == 196)
-				gv->setVertexColor(adjnodeid, "red");
 
-			if(nodeid == 434 || nodeid == 758)
-				gv->setVertexColor(nodeid, "green");
-			else if(adjnodeid == 434 || adjnodeid == 758)
-				gv->setVertexColor(adjnodeid, "green");
+			//			if(grf.getVertex(A)->getadj().size() != 0){
+			//				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
+			//				cout << grf.getVertex(A)->getadj()[0].getdest()->getInfo()->getId();
+			//			cout << "\n\n";}
 
-			if(nodeid == 189 )
-				gv->setVertexColor(nodeid, "pink");
-			else if(adjnodeid ==189 )
-				gv->setVertexColor(adjnodeid, "pink");
 		}
 		else
 			return;
 	}
 
+	void CreateNodes2(Graph<Coordenadas*> &grf, long int streetid, long int nodeid, long int adjnodeid) {
+		Coordenadas *A=this->findCoord(nodeid), *B=this->findCoord(adjnodeid);
+
+		if(A != NULL && B != NULL){
+			grf.addVertex(A);
+			gv->addNode(nodeid, A->getx(), A->gety());
+			gv->setVertexIcon(nodeid, "src/files/house.png");
+			grf.addVertex(B);
+			gv->addNode(adjnodeid, B->getx(), B->gety());
+			gv->setVertexIcon(adjnodeid, "src/files/house.png");
+
+
+			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(B,A, this->distancia(A,B));
+
+
+
+			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+
+			loadImages2(grf, nodeid,adjnodeid);
+
+		}
+		else
+			return;
+	}
+
+
+	void loadImages(Graph<Coordenadas*> &grf, long int nodeid, long int adjnodeid){
+
+		if(nodeid == 352 || nodeid == 421 || nodeid == 536 || nodeid == 492) // gasolina
+			gv->setVertexIcon(nodeid, "src/files/petrol.png");
+		else if(adjnodeid == 352 || adjnodeid == 421 || adjnodeid == 536 || adjnodeid == 492)
+			gv->setVertexIcon(adjnodeid, "src/files/petrol.png");
+		if(nodeid == 640 || nodeid == 481 || nodeid == 55) // macdonalds
+			gv->setVertexIcon(nodeid, "src/files/mac.png");
+		else if(adjnodeid == 640 || adjnodeid == 481 || adjnodeid == 55)
+			gv->setVertexIcon(adjnodeid, "src/files/mac.png");
+		else if(nodeid == 720 || nodeid == 355 || nodeid == 136 || nodeid == 78 || nodeid == 259) // school
+			gv->setVertexIcon(nodeid, "src/files/school.png");
+		else if(adjnodeid == 720 || adjnodeid == 355 || adjnodeid == 136 || adjnodeid == 78 || adjnodeid == 259)
+			gv->setVertexIcon(adjnodeid, "src/files/school.png");
+		else if(nodeid == 523 || nodeid == 313) // hospitais
+			gv->setVertexIcon(nodeid, "src/files/hospital.png");
+		else if(adjnodeid == 523 || adjnodeid == 313)
+			gv->setVertexIcon(adjnodeid, "src/files/hospital.png");
+		else if(nodeid == 434 || nodeid == 165)
+			gv->setVertexIcon(nodeid, "src/files/police.png"); //bombeiros
+		else if(adjnodeid == 434 || adjnodeid == 165)
+			gv->setVertexIcon(adjnodeid, "src/files/police.png");
+		else if(nodeid == 144 || nodeid == 642) //psp
+			gv->setVertexIcon(nodeid, "src/files/firestation.png");
+		else if(adjnodeid == 144 || adjnodeid == 642)
+			gv->setVertexIcon(adjnodeid, "src/files/firestation.png");
+		else if(nodeid == 429 || nodeid == 529 || nodeid == 617 || nodeid == 487 || nodeid == 634 || nodeid == 544 || nodeid == 469) //psp
+			gv->setVertexIcon(nodeid, "src/files/ilha.png");
+		else if(adjnodeid == 429 || adjnodeid == 529 || adjnodeid == 617 || adjnodeid == 487 || adjnodeid == 634 || adjnodeid == 544 || adjnodeid == 469)
+			gv->setVertexIcon(adjnodeid, "src/files/ilha.png");
+	}
+
+	void loadImages2(Graph<Coordenadas*> &grf, long int nodeid, long int adjnodeid){
+		gv->setVertexIcon(nodeid, "src/files/mountain.png");
+
+		gv->setVertexIcon(adjnodeid, "src/files/mountain.png");
+
+	}
+
 	void loadConnectorsFile(Graph<Coordenadas*> &grf){
-			ifstream in;
-			string trans_string;
-			long long int streetid, nodeid, adjnodeid;
-			stringstream is;
-			string str, nome;
+		ifstream in;
+		string trans_string;
+		long long int streetid, nodeid, adjnodeid;
+		stringstream is;
+		string str, nome;
 
-			in.open("src/files/C.txt");
-			if(!in.is_open()){
-				cout <<"File C.txt couldn't be found\n";
-				return;
-			}
+		in.open("src/files/C.txt");
+		if(!in.is_open()){
+			cout <<"File C.txt couldn't be found\n";
+			return;
+		}
 
-			while(getline(in, trans_string)){
-				is.str(trans_string);
-				getline(is, str, ';');
-				streetid = stoll(str);
+		int count =0;
 
-				getline(is, str, ';');
-				nodeid = stoll(str);
+		while(getline(in, trans_string)){
+			is.str(trans_string);
+			getline(is, str, ';');
+			streetid = stoll(str);
 
-				getline(is, str, ';');
-				adjnodeid = stoll(str);
+			getline(is, str, ';');
+			nodeid = stoll(str);
 
-				//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+			getline(is, str, ';');
+			adjnodeid = stoll(str);
 
+			//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+
+			if(count < 713)
 				CreateNodes(grf, streetid, nodeid, adjnodeid);
+			else
+				CreateNodes2(grf, streetid, nodeid, adjnodeid);
 
-				is.ignore();
-				is.clear();
-			}
-			gv->rearrange();
-			in.close();
+			is.ignore();
+			is.clear();
+			count++;
+		}
+
+		gv->setBackground("src/files/background.png");
+		gv->rearrange();
+		in.close();
 	}
 
 
