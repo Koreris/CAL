@@ -96,12 +96,14 @@ int UI::menuLocalUrgencia ()
 	int local=0;
 	while (!validInput)
 	{
-		//TODO
-		//adicionar restricoes
 		cout << "\n Reportar Urgencia \n\n" << endl
 				<< " +=======================================================================+" << endl
 				<< " | +.  Por favor selecione o local da urgencia                           |" << endl
 				<< " | +.  Devera ser um numero entre 1 e 767                                |" << endl
+				<< " | -.  Excluindo:                                                        |" << endl
+				<< " | -.  189 - PSP                                                         |" << endl
+				<< " | -.  434, 758 - Bombeiros                                              |" << endl
+				<< " | -.  523, 313, 196 - Hospitais                                         |" << endl
 				<< " | 0.  Retroceder                                                        |" << endl
 				<< " +=======================================================================+\n" << endl;
 		cout << "\n Numero selecionado do menu:\n";
@@ -110,7 +112,13 @@ int UI::menuLocalUrgencia ()
 		cin.clear ();
 		//cin.ignore(10000, '\n');
 		user_in_ = stol (user_in);
-		if (user_in_ >= 1 && user_in_ <= 767)
+		if (user_in_ >= 1 && user_in_ <= 767
+				&& user_in_ != 189
+				&& user_in_ != 434
+				&& user_in_ != 758
+				&& user_in_ != 523
+				&& user_in_ != 313
+				&& user_in_ != 196) //stations cant be chosen
 		{
 			local=user_in_;
 			validInput = true;
@@ -249,7 +257,7 @@ int estacaoMaisProxima(int local,int tipo, Dados* n)
 		break;
 	case 2:
 		//saude
-	{
+	/*{
 		vector<Coordenadas *> b=n->getBombeiros();
 		int maisProximoB=0;
 		Coordenadas* localCoords=n->getCoordsVec()[local-1];
@@ -257,7 +265,7 @@ int estacaoMaisProxima(int local,int tipo, Dados* n)
 		{
 			if(b[i]->)
 		}
-	}
+	}*/
 	break;
 	case 3:
 		//fogo
