@@ -239,21 +239,33 @@ int UI::menuVazioPGrafo()
 		}
 	}
 }
-int closest_relief(int urg,int type){
-	switch(type){
+
+int estacaoMaisProxima(int local,int tipo, Dados* n)
+{
+	switch(tipo)
+	{
 	case 1:
-		//crimial
+		//criminal - vetor PSP
 		break;
 	case 2:
 		//saude
-		//ver nas estaçoes de bombeiros e hospitais por closest ambulancia
-
+	{
+		vector<Coordenadas *> b=n->getBombeiros();
+		int maisProximoB=0;
+		Coordenadas* localCoords=n->getCoordsVec()[local-1];
+		for(int i=0; i<b.size(); i++)
+		{
+			if(b[i]->)
+		}
+	}
+	break;
 	case 3:
 		//fogo
 
 		break;
 	}
 }
+
 int main()
 {
 
@@ -270,11 +282,11 @@ int main()
 	UI ui = UI(novo);
 	novo->loadNodesFile();
 	novo->loadStreetsFile();
-	int id_urgencia=0;
-	int id_relief=0;
-	int id_final=0;
-	int emergency_type=0;
-	int gravity=0;
+	int idLocal=0;
+	int idEstacao=0;
+	int idFinal=0;
+	int tipoEmergencia=0;
+	int gravidade=0;
 
 	Graph<Coordenadas*> exp;
 
@@ -288,32 +300,33 @@ int main()
 			break;
 
 		case estMenuOpcUrgencia:
-			emergency_type=ui.menuOpcUrgencia();
+			tipoEmergencia=ui.menuOpcUrgencia();
 			break;
 
 		case estMenuOpcUrgencia2:
-			gravity=ui.menuOpcUrgencia2();
+			gravidade=ui.menuOpcUrgencia2();
 			break;
 
 		case estVazioPGrafo:
-			id_relief=closest_relief(id_urgencia,emergency_type);
-			novo->dijkstraAnimation(exp, id_urgencia, id_relief);
-			if(emergency_type==2) //so aplicavel a situaçoesde saude
-				switch(gravity){
+			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, novo);
+			/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
+			novo->dijkstraAnimation(exp, idLocal, idEstacao);
+			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
+				switch(gravidade){
 							case 1:
 								//pouco grave, so vai ate a urgencia e nao volta
 								break;
 							case 2:
 								//medio grave
 								//calc closest hospital
-								//int_final=closest_hospital_id;
-								//novo->dijkstraAnimation(exp,id_relif,int_final);
+								//idFinal=closest_hospital_id;
+								//novo->dijkstraAnimation(exp,idLocal,idFinal);
 								break;
 							case 3:
 								//muito grave,ambulancia vai para hospital mais proximo
 								//calc closest hospital
-								//int_final=closest_hospital_id;
-								//novo->dijkstraAnimation(exp,id_relif,int_final);
+								//idFinal=closest_hospital_id;
+								//novo->dijkstraAnimation(exp,idLocal,idFinal);
 								break;
 			    }
 			break;
@@ -321,17 +334,9 @@ int main()
 			break;
 
 		case estMenuLocalUrgencia:
-			id_urgencia=ui.menuLocalUrgencia();
+			idLocal=ui.menuLocalUrgencia();
 			break;
 		}
 	}
-
-
-	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
-
-	/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
-
-
 	getchar();
-
 }

@@ -20,6 +20,7 @@ class Dados
 	vector<Estrada*> streetsVec ;
 	vector<Coordenadas*> hospitais;
 	vector<Coordenadas*> bombeiros;
+	vector<Coordenadas*> policias;
 	GraphViewer *gv;
 	long int streetids=0;
 
@@ -119,6 +120,11 @@ public:
 		return this->bombeiros;
 	}
 
+	void setPolicias(Coordenadas *h){this->policias.push_back(h);}
+		vector<Coordenadas*> getPolicias(){
+			return this->policias;
+		}
+
 	void loadNodesFile(){
 		ifstream in;
 		string trans_string;
@@ -153,6 +159,9 @@ public:
 
 			if(id == 434 || id == 758)
 				this->setBombeiros(coord);
+
+			if(id == 189)
+				this->setPolicias(coord);
 
 			//cout << coord->getId() << ";" << coord->getx() << ";" << coord->gety() << "\n";
 			this->coordsVec.push_back(coord);
@@ -229,11 +238,9 @@ public:
 			gv->addNode(adjnodeid, B->getx(), B->gety());
 
 			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(B,A, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
 
-			if(this->findStreet(streetid))
-				gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
-			else
-				gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::DIRECTED);
+			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
 
 //			if(grf.getVertex(A)->getadj().size() != 0){
 //				cout << "\n \nAdjacente de " << grf.getVertex(A)->getInfo()->getId() << " :\n";
