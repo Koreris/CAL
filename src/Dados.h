@@ -41,41 +41,56 @@ public:
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
 
-	void dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2 )
+	int dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2)
 	{
-		unsigned int i = 0, j = 0, k = 0, m = 0;
+		unsigned int i = 0, j = 0, k = 0, m = 0, var = 0;
 		double dist = 0;
 		vector<Vertex<Coordenadas*>> tmp;
 
+		long int max = 100000, idchosen=0;
+
+
 		for ( i = 0; i < grf.getVertexSet().size(); i++)
-				if (grf.getVertexSet()[i]->getInfo()->getId() == nodeid1 )
-				{
-					grf.dijkstraShortestPath(grf.getVertexSet()[i]->getInfo());
-				}
+			if (grf.getVertexSet()[i]->getInfo()->getId() == nodeid1 )
+			{
+				grf.dijkstraShortestPath(grf.getVertexSet()[i]->getInfo());
+				var = i;
+			}
+
 
 		for ( j = 0; j < grf.getVertexSet().size(); j++)
-				if (grf.getVertexSet()[j]->getInfo()->getId() == nodeid2 )
-					{
-					tmp.push_back(grf.getVertexSet()[j]->getInfo());
-					dist = grf.getVertexSet()[j]->getDist();
-					break;
-					}
+			if (grf.getVertexSet()[j]->getInfo()->getId() == nodeid2 )
+			{
+				tmp.push_back(grf.getVertexSet()[j]->getInfo());
+				dist = grf.getVertexSet()[j]->getDist();
+				cout << dist << endl;
+				break;
+			}
 
-		while (grf.getVertexSet()[j]->path->getInfo()->getId() != nodeid1)
-		{
 
-				for ( k = 0; k  <  grf.getVertexSet().size() ; k++)
-				{
-					if (grf.getVertexSet()[k]->getInfo()->getId() == grf.getVertexSet()[j]->path->getInfo()->getId() ){
-						tmp.push_back(grf.getVertexSet()[k]->getInfo());
-						j = k;
-					}
+		while (idchosen != nodeid1){
+
+			for (k = 0; k < grf.getVertexSet()[j]->getadj().size(); k++)
+			{
+				if( grf.getVertexSet()[j]->getadj()[k].getdest()->getDist() < max){
+					max = grf.getVertexSet()[j]->getadj()[k].getdest()->getDist();
+					idchosen = grf.getVertexSet()[j]->getadj()[k].getdest()->getInfo()->getId();
 				}
+
+			}
+			j = var;
+			for ( j = 0; j < grf.getVertexSet().size(); j++){
+				if (grf.getVertexSet()[j]->getInfo()->getId() == idchosen )
+				{
+					tmp.push_back(grf.getVertexSet()[j]->getInfo());
+					break;
+				}
+			}
 		}
-		tmp.push_back(grf.getVertexSet()[j]->path->getInfo());
+
 
 		reverse(tmp.begin(), tmp.end());
-		cout << "Trajeto mais curto desde " << nodeid1 << " ate "  << nodeid2 << " : " << endl;
+		cout << "Trajeto mais curto : " << endl;
 		for ( m = 0; m < tmp.size(); m++ )
 		{
 			cout << " " << tmp[m].getInfo()->getId() << " - " ;
@@ -87,11 +102,9 @@ public:
 			sleep(0.3);
 
 		}
-		cout << endl <<  "Distância: " << dist << endl;
+		cout <<  "Distância: " << dist << endl;
 
-
-
-
+		return 0; // sucesso
 
 	}
 
