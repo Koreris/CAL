@@ -101,9 +101,9 @@ int UI::menuLocalUrgencia ()
 				<< " | +.  Por favor selecione o local da urgencia                           |" << endl
 				<< " | +.  Devera ser um numero entre 1 e 767                                |" << endl
 				<< " | -.  Excluindo:                                                        |" << endl
-				<< " | -.  189 - PSP                                                         |" << endl
-				<< " | -.  434, 758 - Bombeiros                                              |" << endl
-				<< " | -.  523, 313, 196 - Hospitais                                         |" << endl
+				<< " | -.  165, 434 - PSP                                                         |" << endl
+				<< " | -.  144, 642 - Bombeiros                                              |" << endl
+				<< " | -.  523, 313 - Hospitais                                         |" << endl
 				<< " | 0.  Retroceder                                                        |" << endl
 				<< " +=======================================================================+\n" << endl;
 		cout << "\n Numero selecionado do menu:\n";
@@ -113,12 +113,12 @@ int UI::menuLocalUrgencia ()
 		//cin.ignore(10000, '\n');
 		user_in_ = stol (user_in);
 		if (user_in_ >= 1 && user_in_ <= 767
-				&& user_in_ != 189
+				&& user_in_ != 165
 				&& user_in_ != 434
-				&& user_in_ != 758
+				&& user_in_ != 144
 				&& user_in_ != 523
 				&& user_in_ != 313
-				&& user_in_ != 196) //stations cant be chosen
+				&& user_in_ != 642) //stations cant be chosen
 		{
 			local=user_in_;
 			validInput = true;
@@ -248,26 +248,74 @@ int UI::menuVazioPGrafo()
 	}
 }
 
-int estacaoMaisProxima(int local,int tipo, Dados* n)
+int estacaoMaisProxima(int local,int tipo, Graph<Coordenadas*> g)
 {
 	switch(tipo)
 	{
 	case 1:
-		//criminal - vetor PSP
-		break;
-	case 2:
-		//saude
-	/*{//usar grafo e ver pelos ids
-		int maisProximoB=0;
-		for(int i=0; i<b.size(); i++)
+		//criminal - policias
+	{
+		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
+		for(int i=0; i<g.getVertexSet().size(); i++)
 		{
+			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
+					&& ((g.getVertexSet()[i]->getInfo()->getId()==434)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==165)))
+			{
+				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+			}
 		}
-	}*/
+		return idMaisProximoB;
+	}
+	break;
+	case 2:
+		//bombeiros e hospitais
+	{
+		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
+		for(int i=0; i<g.getVertexSet().size(); i++)
+		{
+			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
+					&& ((g.getVertexSet()[i]->getInfo()->getId()==523)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==313)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==144)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==642)))
+			{
+				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+			}
+		}
+		return idMaisProximoB;
+	}
 	break;
 	case 3:
-		//fogo
-
-		break;
+	{
+		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
+		for(int i=0; i<g.getVertexSet().size(); i++)
+		{
+			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
+					&& ((g.getVertexSet()[i]->getInfo()->getId()==144)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==642)))
+			{
+				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+			}
+		}
+		return idMaisProximoB;
+	}
+	break;
+	case 4:
+	{
+		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
+		for(int i=0; i<g.getVertexSet().size(); i++)
+		{
+			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
+					&& ((g.getVertexSet()[i]->getInfo()->getId()==523)
+							|| (g.getVertexSet()[i]->getInfo()->getId()==313)))
+			{
+				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+			}
+		}
+		return idMaisProximoB;
+	}
+	break;
 	}
 }
 
@@ -294,8 +342,8 @@ int main()
 	int gravidade=0;
 
 	Graph<Coordenadas*> exp;
-
 	novo->loadConnectorsFile(exp);
+
 	while(true)
 	{
 		switch(ui.estado_atual)
@@ -314,27 +362,27 @@ int main()
 
 		case estVazioPGrafo:
 			novo->doDikstra(exp, idLocal);
-			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, novo);
-			/*Pinta a Amarelo o Trajeto mais curto entre quaisquer dois pontos do grafo*/
+			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, exp);
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
-				switch(gravidade){
+				switch(gravidade)
+				{
 							case 1:
-								//pouco grave, so vai ate a urgencia e nao volta
+								//pouco grave, a ambulancia so vai la
+								novo->dijkstraAnimation(exp,idEstacao,idLocal);
 								break;
 							case 2:
-								//medio grave
-								//calc closest hospital
-								//idFinal=closest_hospital_id;
-								//novo->dijkstraAnimation(exp,idLocal,idFinal);
+								//medio grave vai p hospital
+								novo->dijkstraAnimation(exp,idEstacao,idLocal);
+								idFinal=estacaoMaisProxima(idLocal,4,exp);
+								novo->dijkstraAnimation(exp,idLocal,idFinal);
 								break;
 							case 3:
 								//muito grave,ambulancia vai para hospital mais proximo
-								//calc closest hospital
-								//idFinal=closest_hospital_id;
-								//verficar distancias
-								//novo->dijkstraAnimation(exp,idLocal,idFinal);
+								novo->dijkstraAnimation(exp,idEstacao,idLocal);
+								idFinal=estacaoMaisProxima(idLocal,4,exp);
+								novo->dijkstraAnimation(exp,idLocal,idFinal);
 								break;
-			    }
+				}
 			break;
 			ui.menuVazioPGrafo();
 			break;
