@@ -33,6 +33,7 @@ public:
 
 	Dados(GraphViewer *gv){
 		this->gv = gv;
+		gv->setBackground("src/files/background.jpg");
 		gv->createWindow(1000, 800);
 
 		gv->defineVertexColor("blue");
@@ -168,7 +169,7 @@ public:
 			ydeg = stoi(str);
 
 
-			Coordenadas * coord = new Coordenadas(id, xdeg, ydeg);
+			Coordenadas * coord = new Coordenadas(id, xdeg+50, ydeg+100);
 
 			if(id == 523 || id == 313)
 				this->setHospital(coord);
