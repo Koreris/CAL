@@ -109,8 +109,8 @@ public:
 		{
 			cout << " " << tmp[m].getInfo()->getId() << " - " ;
 
-			gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
-
+			//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
+			gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
 			gv->rearrange();
 
 			sleep(0.3);
