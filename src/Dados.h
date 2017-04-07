@@ -55,7 +55,7 @@ public:
 			}
 	}
 
-	int dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2)
+	int dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2, int Vehicle)
 	{
 		unsigned int i = 0, j = 0, k = 0, m = 0, var = 0;
 		double dist = 0;
@@ -110,7 +110,10 @@ public:
 			cout << " " << tmp[m].getInfo()->getId() << " - " ;
 
 			//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
-			gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+			if (Vehicle == 1 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+			else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+			else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+			else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
 			gv->rearrange();
 
 			sleep(0.3);

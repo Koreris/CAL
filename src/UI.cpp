@@ -7,6 +7,12 @@
 
 #include "UI.h"
 
+/*Veiculos*/
+int AMBULANCIA = 1;
+int PSP = 2;
+int BOMBEIROS = 3;
+int HELI = 4 ;
+/*Veiculos*/
 /**
  * Prompts user to press enter, mimicking a paused state until user presses enter
  * @brief press enter to continue
@@ -368,19 +374,19 @@ int main()
 				{
 							case 1:
 								//pouco grave, a ambulancia so vai la
-								novo->dijkstraAnimation(exp,idEstacao,idLocal);
+								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA); //AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								break;
 							case 2:
 								//medio grave vai p hospital
-								novo->dijkstraAnimation(exp,idEstacao,idLocal);
+								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								idFinal=estacaoMaisProxima(idLocal,4,exp);
-								novo->dijkstraAnimation(exp,idLocal,idFinal);
+								novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								break;
 							case 3:
 								//muito grave,ambulancia vai para hospital mais proximo
-								novo->dijkstraAnimation(exp,idEstacao,idLocal);
+								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								idFinal=estacaoMaisProxima(idLocal,4,exp);
-								novo->dijkstraAnimation(exp,idLocal,idFinal);
+								novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								break;
 				}
 			break;
