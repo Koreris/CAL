@@ -16,6 +16,7 @@
 
 class Dados
 {
+	vector<Vertex<Coordenadas*>> percurso;
 	vector<Coordenadas*> coordsVec ;
 	vector<Estrada*> streetsVec ;
 	vector<Coordenadas*> hospitais;
@@ -29,6 +30,7 @@ public:
 
 	double distancia( Coordenadas* a, Coordenadas* b){
 		return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
+		gv->rearrange();
 	}
 
 	Dados(GraphViewer *gv){
@@ -43,6 +45,14 @@ public:
 
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
+
+	void resetVertexIcon ( )
+	{
+		for (unsigned int i = 1; i < percurso.size()-1; i++)
+		{
+			gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
+		}
+	}
 
 	void doDikstra (Graph<Coordenadas*> &grf, long int nodeid)
 	{
@@ -105,8 +115,10 @@ public:
 
 
 		reverse(tmp.begin(), tmp.end());
+		this-> percurso = tmp;
+
 		cout << "Trajeto mais curto : " << endl;
-		for ( m = 0; m < tmp.size(); m++ )
+		for ( m = 1; m < tmp.size()-1; m++ )
 		{
 			cout << " " << tmp[m].getInfo()->getId() << " - " ;
 
@@ -121,6 +133,8 @@ public:
 
 		}
 		cout <<  "Distância: " << dist << endl;
+
+
 
 		return 0; // sucesso
 

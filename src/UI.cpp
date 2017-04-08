@@ -373,62 +373,83 @@ int main()
 			if(tipoEmergencia==1) //so aplicavel a situacoes crime
 				switch(gravidade)
 					{
-								case 1:
-									//pouco grave, a ambulancia so vai la
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
-									break;
-								case 2:
-									//medio grave vai p hospital
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
-									idFinal=estacaoMaisProxima(idLocal,1,exp);
-									novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
-									break;
-								case 3:
-									//muito grave,ambulancia vai para hospital mais proximo
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
-									idFinal=estacaoMaisProxima(idLocal,1,exp);
-									novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
-									break;
+				case 1:
+					//pouco grave, a ambulancia so vai la
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idEstacao, PSP);
+					novo->resetVertexIcon();
+					break;
+				case 2:
+					//medio grave vai p hospital
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+					idFinal=estacaoMaisProxima(idLocal,1,exp);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
+					novo->resetVertexIcon();
+					break;
+				case 3:
+					//muito grave,ambulancia vai para hospital mais proximo
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+					idFinal=estacaoMaisProxima(idLocal,1,exp);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
+					novo->resetVertexIcon();
+					break;
 					}
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
 					switch(gravidade)
 					{
-								case 1:
-									//pouco grave,
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-									break;
-								case 2:
-									//medio grave
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-									idFinal=estacaoMaisProxima(idLocal,2,exp);
-									novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
-									break;
-								case 3:
-									//muito grave,
-									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-									idFinal=estacaoMaisProxima(idLocal,2,exp);
-									novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
-									break;
+				case 1:
+					//pouco grave,
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idEstacao, AMBULANCIA);
+					novo->resetVertexIcon();
+					break;
+				case 2:
+					//medio grave
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+					idFinal=estacaoMaisProxima(idLocal,2,exp);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
+					novo->resetVertexIcon();
+					break;
+				case 3:
+					//muito grave,
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+					idFinal=estacaoMaisProxima(idLocal,2,exp);
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
+					novo->resetVertexIcon();
+					break;
 					}
 
 			else if(tipoEmergencia==3) //so aplicavel a bombeiros
 				switch(gravidade)
 					{
-				case 1:
+				case 1:{
 					//pouco grave, a
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
-					break;
+					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idEstacao, BOMBEIROS);
+					novo->resetVertexIcon();
+					break;}
 				case 2:
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
 					idFinal=estacaoMaisProxima(idLocal,3,exp);
+					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					novo->resetVertexIcon();
 					break;
 				case 3:
 					//muito grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
 					idFinal=estacaoMaisProxima(idLocal,3,exp);
+					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					novo->resetVertexIcon();
 					break;
 					}
 /*
