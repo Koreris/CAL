@@ -112,9 +112,9 @@ public:
 
 			//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
 			if (Vehicle == 1 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
-			else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
-			else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
-			else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+			else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar.png");
+			else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/fireman.png");
+			else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/heli.png");
 			gv->rearrange();
 
 			sleep(0.3);

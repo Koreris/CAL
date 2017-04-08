@@ -254,73 +254,74 @@ int UI::menuVazioPGrafo()
 	}
 }
 
-int estacaoMaisProxima(int local,int tipo, Graph<Coordenadas*> g)
+int estacaoMaisProxima(int local,int tipo, Graph<Coordenadas*> & g)
 {
+double max = 1000000;
+int idtosend;
 	switch(tipo)
 	{
 	case 1:
 		//criminal - policias
 	{
-		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
-		for(int i=0; i<g.getVertexSet().size(); i++)
+		max=100000;
+		for(unsigned int i=0; i<g.getVertexSet().size(); i++)
 		{
-			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
-					&& ((g.getVertexSet()[i]->getInfo()->getId()==434)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==165)))
+			if ( g.getVertexSet()[i]->getDist() < max && (g.getVertexSet()[i]->getInfo()->getId() == 434
+					|| g.getVertexSet()[i]->getInfo()->getId() == 165))
 			{
-				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+				max = g.getVertexSet()[i]->getDist();
+				idtosend = g.getVertexSet()[i]->getInfo()->getId();
 			}
 		}
-		return idMaisProximoB;
+		return idtosend;
 	}
 	break;
 	case 2:
-		//bombeiros e hospitais
+		//hospitais
 	{
-		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
-		for(int i=0; i<g.getVertexSet().size(); i++)
+		max=100000;
+		for(unsigned int i=0; i<g.getVertexSet().size(); i++)
 		{
-			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
-					&& ((g.getVertexSet()[i]->getInfo()->getId()==523)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==313)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==144)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==642)))
+			if ( g.getVertexSet()[i]->getDist() < max && (g.getVertexSet()[i]->getInfo()->getId() == 523
+					|| g.getVertexSet()[i]->getInfo()->getId() == 313))
 			{
-				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+				max = g.getVertexSet()[i]->getDist();
+				idtosend = g.getVertexSet()[i]->getInfo()->getId();
 			}
 		}
-		return idMaisProximoB;
+		return idtosend;
 	}
 	break;
 	case 3:
+		//bombeiros
 	{
-		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
-		for(int i=0; i<g.getVertexSet().size(); i++)
+		max=100000;
+		for(unsigned int i=0; i<g.getVertexSet().size(); i++)
 		{
-			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
-					&& ((g.getVertexSet()[i]->getInfo()->getId()==144)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==642)))
+			if ( g.getVertexSet()[i]->getDist() < max && (g.getVertexSet()[i]->getInfo()->getId() == 642
+					|| g.getVertexSet()[i]->getInfo()->getId() == 144))
 			{
-				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+				max = g.getVertexSet()[i]->getDist();
+				idtosend = g.getVertexSet()[i]->getInfo()->getId();
 			}
 		}
-		return idMaisProximoB;
+		return idtosend;
 	}
-	break;
+	break;/*
 	case 4:
+		//heli
 	{
-		int idMaisProximoB=g.getVertexSet()[0]->getInfo()->getId();
-		for(int i=0; i<g.getVertexSet().size(); i++)
+		max=100000;
+		for(unsigned int i=0; i<g.getVertexSet().size(); i++)
 		{
-			if((g.getVertexSet()[i]->getDist() <= g.getVertexSet()[idMaisProximoB]->getDist())
-					&& ((g.getVertexSet()[i]->getInfo()->getId()==523)
-							|| (g.getVertexSet()[i]->getInfo()->getId()==313)))
+			if ( g.getVertexSet()[i]->getDist() < max && (g.getVertexSet()[i]->getInfo()->getId() == 144
+					|| g.getVertexSet()[i]->getInfo()->getId() == 642))
 			{
-				idMaisProximoB=g.getVertexSet()[i]->getInfo()->getId();
+				max = g.getVertexSet()[i]->getInfo()->getId();
 			}
 		}
-		return idMaisProximoB;
-	}
+		return max;
+	}*/
 	break;
 	}
 }
@@ -369,30 +370,93 @@ int main()
 		case estVazioPGrafo:
 			novo->doDikstra(exp, idLocal);
 			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, exp);
-			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
+			if(tipoEmergencia==1) //so aplicavel a situacoes crime
 				switch(gravidade)
-				{
-							case 1:
-								//pouco grave, a ambulancia so vai la
-								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA); //AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-								break;
-							case 2:
-								//medio grave vai p hospital
-								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-								idFinal=estacaoMaisProxima(idLocal,4,exp);
-								novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-								break;
-							case 3:
-								//muito grave,ambulancia vai para hospital mais proximo
-								novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-								idFinal=estacaoMaisProxima(idLocal,4,exp);
-								novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-								break;
-				}
-			else
-			{
-				novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA); //AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
-			}
+					{
+								case 1:
+									//pouco grave, a ambulancia so vai la
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+									break;
+								case 2:
+									//medio grave vai p hospital
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+									idFinal=estacaoMaisProxima(idLocal,1,exp);
+									novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
+									break;
+								case 3:
+									//muito grave,ambulancia vai para hospital mais proximo
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+									idFinal=estacaoMaisProxima(idLocal,1,exp);
+									novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
+									break;
+					}
+			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
+					switch(gravidade)
+					{
+								case 1:
+									//pouco grave,
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+									break;
+								case 2:
+									//medio grave
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+									idFinal=estacaoMaisProxima(idLocal,2,exp);
+									novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
+									break;
+								case 3:
+									//muito grave,
+									novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+									idFinal=estacaoMaisProxima(idLocal,2,exp);
+									novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
+									break;
+					}
+
+			else if(tipoEmergencia==3) //so aplicavel a bombeiros
+				switch(gravidade)
+					{
+				case 1:
+					//pouco grave, a
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
+					break;
+				case 2:
+					//medio grave
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
+					idFinal=estacaoMaisProxima(idLocal,3,exp);
+					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					break;
+				case 3:
+					//muito grave,
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
+					idFinal=estacaoMaisProxima(idLocal,3,exp);
+					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					break;
+					}
+/*
+			else if(tipoEmergencia==4) //so aplicavel a bombeiros
+				switch(gravidade)
+					{
+				case 1:
+					//pouco grave,
+					Coordenadas *A=this->findCoord(idEstacao), *B=this->findCoord(idLocal);
+					exp.addEdge(A,B, this->distancia(A,B));
+					exp.addEdge(B,A, this->distancia(A,B));
+					gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, HELI);
+
+					break;
+				case 2:
+					//medio grave
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, HELI);
+					idFinal=estacaoMaisProxima(idLocal,4,exp);
+					novo->dijkstraAnimation(exp,idLocal,idFinal, HELI);
+					break;
+				case 3:
+					//muito grave
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, HELI);
+					idFinal=estacaoMaisProxima(idLocal,4,exp);
+					novo->dijkstraAnimation(exp,idLocal,idFinal, HELI);
+					break;
+					}*/
 			break;
 			ui.menuVazioPGrafo();
 			break;
