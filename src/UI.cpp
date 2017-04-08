@@ -377,8 +377,7 @@ int main()
 					//pouco grave, a ambulancia so vai la
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idEstacao, PSP);
-					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 				case 2:
 					//medio grave vai p hospital
@@ -387,6 +386,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 				case 3:
 					//muito grave,ambulancia vai para hospital mais proximo
@@ -395,6 +395,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 					}
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
@@ -404,8 +405,7 @@ int main()
 					//pouco grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idEstacao, AMBULANCIA);
-					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 				case 2:
 					//medio grave
@@ -414,6 +414,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 				case 3:
 					//muito grave,
@@ -422,6 +423,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 					}
 
@@ -432,8 +434,7 @@ int main()
 					//pouco grave, a
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idEstacao, BOMBEIROS);
-					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;}
 				case 2:
 					//medio grave
@@ -442,6 +443,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 				case 3:
 					//muito grave,
@@ -450,6 +452,7 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
 					novo->resetVertexIcon();
+					tipoEmergencia=0;
 					break;
 					}
 /*
