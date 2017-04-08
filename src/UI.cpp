@@ -389,6 +389,10 @@ int main()
 								novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);//AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
 								break;
 				}
+			else
+			{
+				novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA); //AMBULANCIA,PSP,BOMBEIROS,..., VER VARIAVEIS GLOBAIS
+			}
 			break;
 			ui.menuVazioPGrafo();
 			break;
