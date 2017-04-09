@@ -22,11 +22,11 @@ class Dados
 	vector<Coordenadas*> hospitais;
 	vector<Coordenadas*> bombeiros;
 	vector<Coordenadas*> policias;
-	GraphViewer *gv;
-	long int streetids=0;
 	int pos;
 
 public:
+	GraphViewer *gv;
+	int streetids=0;
 
 	double distancia( Coordenadas* a, Coordenadas* b){
 		return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
@@ -46,15 +46,21 @@ public:
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
 
-	void resetVertexIcon ( )
+	void resetVertexIcon (bool heli)
 	{
-		for (unsigned int i = 1; i < percurso.size()-1; i++)
-		{
-			gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
-		}
+		if(heli)
+			for (unsigned int i = 1; i < percurso.size(); i++)
+			{
+				gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
+			}
+		else
+			for (unsigned int i = 1; i < percurso.size()-1; i++)
+			{
+				gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
+			}
 	}
 
-	void doDikstra (Graph<Coordenadas*> &grf, long int nodeid)
+	void doDikstra (Graph<Coordenadas*> &grf, int nodeid)
 	{
 		unsigned int i = 0;
 
@@ -66,13 +72,13 @@ public:
 			}
 	}
 
-	int dijkstraAnimation(Graph<Coordenadas*> &grf, long int nodeid1, long int nodeid2, int Vehicle)
+	double dijkstraAnimation(Graph<Coordenadas*> &grf, int nodeid1, int nodeid2, int Vehicle, bool heli)
 	{
 		unsigned int i = 0, j = 0, k = 0, m = 0, var = 0;
 		double dist = 0;
 		vector<Vertex<Coordenadas*>> tmp;
 
-		long int max = 100000, idchosen=0;
+		int max = 100000, idchosen=0;
 
 
 		for ( i = 0; i < grf.getVertexSet().size(); i++)
@@ -118,28 +124,48 @@ public:
 		this-> percurso = tmp;
 
 		cout << "Trajeto mais curto : " << endl;
-		for ( m = 1; m < tmp.size()-1; m++ )
-		{
-			cout << " " << tmp[m].getInfo()->getId() << " - " ;
+		if(heli)
+			for ( m = 1; m < tmp.size(); m++ )
+			{
+				cout << " " << tmp[m].getInfo()->getId() << " - " ;
 
-			//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
-			if (Vehicle == 1 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
-			else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar.png");
-			else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/fireman.png");
-			else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/heli.png");
-			else if (Vehicle == 5 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar2.png");
-			else if (Vehicle == 6 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/firetruck.png");
-			else if (Vehicle == 7 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/tank.png");
-			gv->rearrange();
+				//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
+				if (Vehicle == 1 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+				else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar.png");
+				else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/fireman.png");
+				else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/heli.png");
+				else if (Vehicle == 5 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar2.png");
+				else if (Vehicle == 6 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/firetruck.png");
+				else if (Vehicle == 7 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/tank.png");
+				gv->rearrange();
 
-			sleep(0.3);
+				sleep(0.3);
 
-		}
+			}
+		else
+			for ( m = 1; m < tmp.size()-1; m++ )
+			{
+				cout << " " << tmp[m].getInfo()->getId() << " - " ;
+
+				//gv->setVertexColor(tmp[m].getInfo()->getId(), "yellow");
+				if (Vehicle == 1 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/ambulance.png");
+				else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar.png");
+				else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/fireman.png");
+				else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/heli.png");
+				else if (Vehicle == 5 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar2.png");
+				else if (Vehicle == 6 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/firetruck.png");
+				else if (Vehicle == 7 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/tank.png");
+				gv->rearrange();
+
+				sleep(0.3);
+
+			}
+
 		cout <<  "Distância: " << dist << endl;
 
 
 
-		return 0; // sucesso
+		return dist; // sucesso
 
 	}
 
@@ -162,7 +188,7 @@ public:
 	void loadNodesFile(){
 		ifstream in;
 		string trans_string;
-		long long int id;
+		int id;
 		int xdeg, ydeg;
 		stringstream is;
 		string str;
@@ -210,7 +236,7 @@ public:
 	void loadStreetsFile(){
 		ifstream in;
 		string trans_string;
-		long long int id;
+		int id;
 		stringstream is;
 		string str, nome;
 		bool dsk;
@@ -244,7 +270,7 @@ public:
 		in.close();
 	}
 
-	Coordenadas* findCoord(long int c){
+	Coordenadas* findCoord(int c){
 		for (unsigned int i = 0; i < this->coordsVec.size(); ++i) {
 			if(this->coordsVec[i]->getId() == c)
 				return this->coordsVec[i];
@@ -253,7 +279,7 @@ public:
 		return NULL;
 	}
 
-	Estrada* findStreet(long int c){
+	Estrada* findStreet(int c){
 		for (unsigned int i = 0; i < this->streetsVec.size(); ++i) {
 			if(this->streetsVec[i]->getId() == c)
 				return this->streetsVec[i];
@@ -262,7 +288,19 @@ public:
 		return NULL;
 	}
 
-	void CreateNodes(Graph<Coordenadas*> &grf, long int streetid, long int nodeid, long int adjnodeid) {
+	void setHeli(Graph<Coordenadas*> &exp, int idLocal, int idEstacao){
+		Coordenadas *A=this->findCoord(idLocal), *B=this->findCoord(idEstacao);
+
+		exp.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+		cout << "\nO local escolhido para emergência é um Local de dificil acesso, será enviado um helicoptero!" << endl;
+
+		exp.addEdge(B,A, this->distancia(A,B));
+
+		gv->addEdge(this->streetids+=1, idLocal, idEstacao,EdgeType::UNDIRECTED);
+		gv->rearrange();
+	}
+
+	void CreateNodes(Graph<Coordenadas*> &grf, int streetid, int nodeid, int adjnodeid) {
 		Coordenadas *A=this->findCoord(nodeid), *B=this->findCoord(adjnodeid);
 
 		if(A != NULL && B != NULL){
@@ -294,7 +332,7 @@ public:
 			return;
 	}
 
-	void CreateNodes2(Graph<Coordenadas*> &grf, long int streetid, long int nodeid, long int adjnodeid) {
+	void CreateNodes2(Graph<Coordenadas*> &grf, int streetid, int nodeid, int adjnodeid) {
 		Coordenadas *A=this->findCoord(nodeid), *B=this->findCoord(adjnodeid);
 
 		if(A != NULL && B != NULL){
@@ -321,7 +359,7 @@ public:
 	}
 
 
-	void loadImages(Graph<Coordenadas*> &grf, long int nodeid, long int adjnodeid){
+	void loadImages(Graph<Coordenadas*> &grf, int nodeid, int adjnodeid){
 
 		if(nodeid == 352 || nodeid == 421 || nodeid == 536 || nodeid == 492) // gasolina
 			gv->setVertexIcon(nodeid, "src/files/petrol.png");
@@ -353,7 +391,7 @@ public:
 			gv->setVertexIcon(adjnodeid, "src/files/ilha.png");
 	}
 
-	void loadImages2(Graph<Coordenadas*> &grf, long int nodeid, long int adjnodeid){
+	void loadImages2(Graph<Coordenadas*> &grf, int nodeid, int adjnodeid){
 		gv->setVertexIcon(nodeid, "src/files/mountain.png");
 
 		gv->setVertexIcon(adjnodeid, "src/files/mountain.png");
@@ -363,7 +401,7 @@ public:
 	void loadConnectorsFile(Graph<Coordenadas*> &grf){
 		ifstream in;
 		string trans_string;
-		long long int streetid, nodeid, adjnodeid;
+		int streetid, nodeid, adjnodeid;
 		stringstream is;
 		string str, nome;
 
