@@ -13,6 +13,7 @@ int PSP = 2;
 int BOMBEIROS = 3;
 int HELI = 4 ;
 int PSP2 = 5;
+int PSP3 = 7;
 int BOMBEIROS2 = 6;
 
 /*Veiculos*/
@@ -259,7 +260,7 @@ int UI::menuVazioPGrafo()
 
 int estacaoMaisProxima(int local,int tipo, Graph<Coordenadas*> & g)
 {
-double max = 1000000;
+double max = 1000000.0;
 int idtosend;
 	switch(tipo)
 	{
@@ -387,6 +388,7 @@ int main()
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2);
+					novo->resetVertexIcon();
 					tipoEmergencia=0;
 					break;
 				case 3:
@@ -394,9 +396,9 @@ int main()
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP3);
+					novo->resetVertexIcon();
 					tipoEmergencia=0;
-					break;
 					break;
 					}
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
@@ -413,6 +415,11 @@ int main()
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+					novo->resetVertexIcon();
+					novo->doDikstra(exp, idLocal);
+					idEstacao=estacaoMaisProxima(idLocal,3, exp);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
+					novo->resetVertexIcon();
 					tipoEmergencia=0;
 					break;
 				case 3:
@@ -421,10 +428,16 @@ int main()
 					idFinal=estacaoMaisProxima(idLocal,2,exp);
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
-					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
+
+					novo->doDikstra(exp, idLocal);
+					idEstacao=estacaoMaisProxima(idLocal,1, exp);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
+
+					novo->doDikstra(exp, idLocal);
+					idEstacao=estacaoMaisProxima(idLocal,3, exp);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
+
+
 					tipoEmergencia=0;
 					break;
 					}
@@ -438,14 +451,14 @@ int main()
 					novo->resetVertexIcon();
 					tipoEmergencia=0;
 					break;}
-				case 2:
+				case 2:{
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
 					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS2);
 					novo->resetVertexIcon();
 					tipoEmergencia=0;
-					break;
+					break;}
 				case 3:
 					//muito grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);

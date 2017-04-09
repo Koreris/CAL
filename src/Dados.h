@@ -127,8 +127,9 @@ public:
 			else if (Vehicle == 2 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar.png");
 			else if (Vehicle == 3 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/fireman.png");
 			else if (Vehicle == 4 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/heli.png");
-			else if (Vehicle == 5 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policeman.png");
+			else if (Vehicle == 5 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/policecar2.png");
 			else if (Vehicle == 6 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/firetruck.png");
+			else if (Vehicle == 7 ) gv->setVertexIcon(tmp[m].getInfo()->getId(), "src/files/tank.png");
 			gv->rearrange();
 
 			sleep(0.3);
