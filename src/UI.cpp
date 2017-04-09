@@ -12,6 +12,9 @@ int AMBULANCIA = 1;
 int PSP = 2;
 int BOMBEIROS = 3;
 int HELI = 4 ;
+int PSP2 = 5;
+int BOMBEIROS2 = 6;
+
 /*Veiculos*/
 /**
  * Prompts user to press enter, mimicking a paused state until user presses enter
@@ -382,20 +385,18 @@ int main()
 				case 2:
 					//medio grave vai p hospital
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
-					idFinal=estacaoMaisProxima(idLocal,1,exp);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
-					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2);
 					tipoEmergencia=0;
 					break;
 				case 3:
-					//muito grave,ambulancia vai para hospital mais proximo
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2);
+					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP);
-					idFinal=estacaoMaisProxima(idLocal,1,exp);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, PSP);
-					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2);
 					tipoEmergencia=0;
+					break;
 					break;
 					}
 			if(tipoEmergencia==2) //so aplicavel a situaçoesde saude
@@ -410,10 +411,8 @@ int main()
 				case 2:
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-					idFinal=estacaoMaisProxima(idLocal,2,exp);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
-					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
 					tipoEmergencia=0;
 					break;
 				case 3:
@@ -421,8 +420,11 @@ int main()
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
 					idFinal=estacaoMaisProxima(idLocal,2,exp);
 					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
+					novo->resetVertexIcon();
 					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
 					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idLocal,idFinal, AMBULANCIA);
 					tipoEmergencia=0;
 					break;
 					}
@@ -439,19 +441,18 @@ int main()
 				case 2:
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
-					idFinal=estacaoMaisProxima(idLocal,3,exp);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS2);
 					novo->resetVertexIcon();
 					tipoEmergencia=0;
 					break;
 				case 3:
 					//muito grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
-					idFinal=estacaoMaisProxima(idLocal,3,exp);
 					novo->resetVertexIcon();
-					novo->dijkstraAnimation(exp,idLocal,idFinal, BOMBEIROS);
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS2);
 					novo->resetVertexIcon();
+					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS);
 					tipoEmergencia=0;
 					break;
 					}
