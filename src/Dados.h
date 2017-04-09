@@ -49,14 +49,19 @@ public:
 	void resetVertexIcon (bool heli)
 	{
 		if(heli)
-			for (unsigned int i = 1; i < percurso.size(); i++)
-			{
-				gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
-			}
-		else
 			for (unsigned int i = 1; i < percurso.size()-1; i++)
 			{
-				gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
+				gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/mountain.png" );
+			}
+		else
+			for (unsigned int i = 1; i < percurso.size(); i++)
+			{
+				if(percurso[i].getInfo()->getId() == 165 || percurso[i].getInfo()->getId() == 434) gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/police.png" );
+				else if(percurso[i].getInfo()->getId() == 144 || percurso[i].getInfo()->getId() == 642) gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/firestation.png" );
+				else if(percurso[i].getInfo()->getId() == 523 || percurso[i].getInfo()->getId() == 313) gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/Hospital.png" );
+				else  gv->setVertexIcon(percurso[i].getInfo()->getId(), "src/files/house.png" );
+
+
 			}
 	}
 

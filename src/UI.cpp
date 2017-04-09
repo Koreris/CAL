@@ -331,6 +331,7 @@ int idtosend;
 }
 
 bool TestHelicopter(int j, Graph<Coordenadas*> exp) {
+
 	if(exp.getVertexSet()[j]->getDist() > 1000000)
 		return true;
 	else
@@ -358,7 +359,7 @@ int main()
 	int idFinal=0;
 	int tipoEmergencia=0;
 	int gravidade=0;
-
+	int j = 249;
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
 
@@ -379,16 +380,21 @@ int main()
 			break;
 
 		case estVazioPGrafo:
-			int j ;
-			novo->doDikstra(exp, idLocal);
 
+
+			novo->doDikstra(exp, idLocal);
 			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, exp);
+			if(idEstacao == idLocal) {
+				cout << "O local da urgencia não pode coincidir com a propria estacao" << endl;
+				exit(0);
+			}
 
 			for (unsigned int i = 0; i < exp.getVertexSet().size(); i++)
 			{
 				if (exp.getVertexSet()[i]->getInfo()->getId() == idEstacao)
 					j = i;
 			}
+
 
 			if(TestHelicopter(j, exp)){
 				cout << "\nO local escolhido para emergência é um Local de dificil acesso, será enviado um helicoptero!" << endl;
@@ -403,6 +409,7 @@ int main()
 				novo->setHeli(exp, idLocal, idEstacao);
 				novo->dijkstraAnimation(exp,idEstacao,idLocal, HELI, true);
 				novo->resetVertexIcon(true);
+
 			}
 			else
 			{if(tipoEmergencia==1) //so aplicavel a situacoes crime
@@ -411,7 +418,7 @@ int main()
 				case 1:
 					//pouco grave, a ambulancia so vai la
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idLocal,idEstacao, PSP, false);
 					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
@@ -419,18 +426,18 @@ int main()
 				case 2:
 					//medio grave vai p hospital
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;
 				case 3:
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP2, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP3, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;
 					}
@@ -440,7 +447,7 @@ int main()
 				case 1:
 					//pouco grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idLocal,idEstacao, AMBULANCIA, false);
 					novo->resetVertexIcon(false);
 
@@ -449,32 +456,29 @@ int main()
 				case 2:
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA, true);
-					novo->resetVertexIcon(true);
-					//novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
-					//novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->doDikstra(exp, idLocal);
 					idEstacao=estacaoMaisProxima(idLocal,3, exp);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;
 				case 3:
 					//muito grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA, true);
 					idFinal=estacaoMaisProxima(idLocal,2,exp);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					//novo->dijkstraAnimation(exp,idEstacao,idLocal, AMBULANCIA);
 
 					novo->doDikstra(exp, idLocal);
 					idEstacao=estacaoMaisProxima(idLocal,1, exp);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, PSP, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 
 					novo->doDikstra(exp, idLocal);
 					idEstacao=estacaoMaisProxima(idLocal,3, exp);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, true);
-
-
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;
 					}
@@ -485,7 +489,7 @@ int main()
 				case 1:{
 					//pouco grave, a
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, false);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idLocal,idEstacao, BOMBEIROS, false);
 					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
@@ -493,18 +497,19 @@ int main()
 				case 2:{
 					//medio grave
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS2, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;}
 				case 3:
 					//muito grave,
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS2, true);
-					novo->resetVertexIcon(true);
+					novo->resetVertexIcon(false);
 					novo->dijkstraAnimation(exp,idEstacao,idLocal, BOMBEIROS, true);
+					novo->resetVertexIcon(false);
 					tipoEmergencia=0;
 					break;
 					}}
