@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['edgetype',['EdgeType',['../class_edge_type.html',1,'']]]
+  ['dados',['Dados',['../class_dados.html',1,'']]]
 ];

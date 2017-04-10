@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['exercicio1',['exercicio1',['../_ficha_j_u_n_g_8cpp.html#a6c05fc3c2c987a3846c69c17adc81d87',1,'FichaJUNG.cpp']]],
-  ['exercicio2',['exercicio2',['../_ficha_j_u_n_g_8cpp.html#a1ccdc070690b203afe2c83580060be95',1,'FichaJUNG.cpp']]],
-  ['exercicio3',['exercicio3',['../_ficha_j_u_n_g_8cpp.html#ab171e73c670175f5051390a109fd0b20',1,'FichaJUNG.cpp']]]
+  ['graphviewer',['GraphViewer',['../class_graph_viewer.html#a8adc614f4fc290a3efcec7d7ceb1c58a',1,'GraphViewer::GraphViewer(int width, int height, bool dynamic)'],['../class_graph_viewer.html#ad9d7b1d8b4ba8ef18517eae0e68568a2',1,'GraphViewer::GraphViewer(int width, int height, bool dynamic, int port_n)']]]
 ];
