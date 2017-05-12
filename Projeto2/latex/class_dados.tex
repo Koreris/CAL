@@ -1,0 +1,88 @@
+\hypertarget{class_dados}{}\section{Dados Class Reference}
+\label{class_dados}\index{Dados@{Dados}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_dados_a36ab23feacc6b4c140daf063fd84a73b}{}\label{class_dados_a36ab23feacc6b4c140daf063fd84a73b} 
+double {\bfseries distancia} (\hyperlink{class_coordenadas}{Coordenadas} $\ast$a, \hyperlink{class_coordenadas}{Coordenadas} $\ast$b)
+\item 
+\hypertarget{class_dados_aa55d11a27311aa33ea02115486c577d5}{}\label{class_dados_aa55d11a27311aa33ea02115486c577d5} 
+{\bfseries Dados} (\hyperlink{class_graph_viewer}{Graph\+Viewer} $\ast$gv)
+\item 
+\hypertarget{class_dados_a6b639b659a4aceb2f47b3393bc286b56}{}\label{class_dados_a6b639b659a4aceb2f47b3393bc286b56} 
+vector$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$ $>$ {\bfseries get\+Coords\+Vec} ()
+\item 
+\hypertarget{class_dados_a84da44685f662f5e83c9d6579e105ab8}{}\label{class_dados_a84da44685f662f5e83c9d6579e105ab8} 
+vector$<$ \hyperlink{class_estrada}{Estrada} $\ast$ $>$ {\bfseries get\+Streets\+Vec} ()
+\item 
+\hypertarget{class_dados_ac90a691fabdbd9e49356b74bb3cdd1b9}{}\label{class_dados_ac90a691fabdbd9e49356b74bb3cdd1b9} 
+void {\bfseries reset\+Vertex\+Icon} (bool heli)
+\item 
+\hypertarget{class_dados_a9526a815aa8bd6fc68f0230c2537521b}{}\label{class_dados_a9526a815aa8bd6fc68f0230c2537521b} 
+void {\bfseries do\+Dikstra} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int nodeid)
+\item 
+\hypertarget{class_dados_a16e953ed200f3e97989a4584d2103d1c}{}\label{class_dados_a16e953ed200f3e97989a4584d2103d1c} 
+double {\bfseries dijkstra\+Animation} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int nodeid1, int nodeid2, int Vehicle, bool heli)
+\item 
+\hypertarget{class_dados_a11e89b4b61e80eaa30a6360c721f9d76}{}\label{class_dados_a11e89b4b61e80eaa30a6360c721f9d76} 
+void {\bfseries set\+Hospital} (\hyperlink{class_coordenadas}{Coordenadas} $\ast$h)
+\item 
+\hypertarget{class_dados_a3f30e7d6147a6e057efeda601428c9b3}{}\label{class_dados_a3f30e7d6147a6e057efeda601428c9b3} 
+vector$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$ $>$ {\bfseries get\+Hospitais} ()
+\item 
+\hypertarget{class_dados_af7d722284adc4c46eb3514b3062affcd}{}\label{class_dados_af7d722284adc4c46eb3514b3062affcd} 
+void {\bfseries set\+Bombeiros} (\hyperlink{class_coordenadas}{Coordenadas} $\ast$h)
+\item 
+\hypertarget{class_dados_a3a10b89bd10631c3e071303d836244d1}{}\label{class_dados_a3a10b89bd10631c3e071303d836244d1} 
+vector$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$ $>$ {\bfseries get\+Bombeiros} ()
+\item 
+\hypertarget{class_dados_a6c16c2442eca9bca3a13f19a575241e9}{}\label{class_dados_a6c16c2442eca9bca3a13f19a575241e9} 
+void {\bfseries set\+Policias} (\hyperlink{class_coordenadas}{Coordenadas} $\ast$h)
+\item 
+\hypertarget{class_dados_aa53c87820e9852e4114b5dff937eff9e}{}\label{class_dados_aa53c87820e9852e4114b5dff937eff9e} 
+vector$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$ $>$ {\bfseries get\+Policias} ()
+\item 
+\hypertarget{class_dados_ab50116175c27cdb7cfdac2d71ed38afb}{}\label{class_dados_ab50116175c27cdb7cfdac2d71ed38afb} 
+void {\bfseries load\+Nodes\+File} ()
+\item 
+\hypertarget{class_dados_a495de231f8f3bfd7e4e65a4445e66456}{}\label{class_dados_a495de231f8f3bfd7e4e65a4445e66456} 
+void {\bfseries load\+Streets\+File} ()
+\item 
+\hypertarget{class_dados_ad511b6084a2b9bd0413a30a252f6931b}{}\label{class_dados_ad511b6084a2b9bd0413a30a252f6931b} 
+\hyperlink{class_coordenadas}{Coordenadas} $\ast$ {\bfseries find\+Coord} (int c)
+\item 
+\hypertarget{class_dados_a81ccb8b0ec829673731694f0d0475d8c}{}\label{class_dados_a81ccb8b0ec829673731694f0d0475d8c} 
+\hyperlink{class_estrada}{Estrada} $\ast$ {\bfseries find\+Street} (int c)
+\item 
+\hypertarget{class_dados_a42e5f8a9860f00247f63131eec9e18b4}{}\label{class_dados_a42e5f8a9860f00247f63131eec9e18b4} 
+void {\bfseries set\+Heli} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&exp, int id\+Local, int id\+Estacao)
+\item 
+\hypertarget{class_dados_a006607fb3a2f8b4226ed85360547d5dd}{}\label{class_dados_a006607fb3a2f8b4226ed85360547d5dd} 
+void {\bfseries Create\+Nodes} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int streetid, int nodeid, int adjnodeid)
+\item 
+\hypertarget{class_dados_ad2a88fcad2caa43ddabf1e9ea5372376}{}\label{class_dados_ad2a88fcad2caa43ddabf1e9ea5372376} 
+void {\bfseries Create\+Nodes2} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int streetid, int nodeid, int adjnodeid)
+\item 
+\hypertarget{class_dados_a4314de6620340c90ef692bfa59efe06c}{}\label{class_dados_a4314de6620340c90ef692bfa59efe06c} 
+void {\bfseries load\+Images} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int nodeid, int adjnodeid)
+\item 
+\hypertarget{class_dados_a82bb69be0db78740caf3575f96534cae}{}\label{class_dados_a82bb69be0db78740caf3575f96534cae} 
+void {\bfseries load\+Images2} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf, int nodeid, int adjnodeid)
+\item 
+\hypertarget{class_dados_a11716df720615ab54fb72d2d52cb7203}{}\label{class_dados_a11716df720615ab54fb72d2d52cb7203} 
+void {\bfseries load\+Connectors\+File} (\hyperlink{class_graph}{Graph}$<$ \hyperlink{class_coordenadas}{Coordenadas} $\ast$$>$ \&grf)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_dados_aa85aa0887cafc06905c9c552796bc3b2}{}\label{class_dados_aa85aa0887cafc06905c9c552796bc3b2} 
+\hyperlink{class_graph_viewer}{Graph\+Viewer} $\ast$ {\bfseries gv}
+\item 
+\hypertarget{class_dados_a32fe6c7b2371d311355aed39364235f6}{}\label{class_dados_a32fe6c7b2371d311355aed39364235f6} 
+int {\bfseries streetids} =0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Dados.\+h\end{DoxyCompactItemize}
