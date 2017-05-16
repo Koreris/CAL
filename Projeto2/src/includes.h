@@ -10,7 +10,6 @@
 #include <fstream>
 #include <stdio.h>
 #include <windows.h>
-//#include <mac.h>
 #include <fstream>
 #include <utility>
 #include <cmath>

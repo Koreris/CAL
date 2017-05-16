@@ -27,6 +27,7 @@ class Dados
 public:
 	GraphViewer *gv;
 	int streetids=0;
+	string streetnametemp = "  ";
 
 	double distancia( Coordenadas* a, Coordenadas* b){
 		return sqrt( pow( a->getx()-b->getx(), 2 ) + pow( a->gety()-b->gety() ,2) );
@@ -259,6 +260,8 @@ public:
 
 			getline(is, nome, ';');
 
+			//cout << nome << endl;
+
 			getline(is, str, ';');
 
 			if (str == "True")
@@ -320,9 +323,17 @@ public:
 			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
 			grf.addEdge(B,A, this->distancia(A,B));
 
-
+			//cout << "rua: " << findStreet(streetid)->getNome();
 
 			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+
+			if(findStreet(streetid) != NULL){
+				streetnametemp = findStreet(streetid)->getNome();
+				gv->setEdgeLabel(this->streetids,streetnametemp);
+			}
+			else{
+				gv->setEdgeLabel(this->streetids,streetnametemp);
+			}
 
 			loadImages(grf, nodeid, adjnodeid);
 
@@ -355,6 +366,11 @@ public:
 
 
 			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
+
+			if(findStreet(streetid) != NULL){
+				gv->setEdgeLabel(this->streetids,findStreet(streetid)->getNome());
+			}
+
 
 			loadImages2(grf, nodeid,adjnodeid);
 
@@ -429,7 +445,7 @@ public:
 			getline(is, str, ';');
 			adjnodeid = stoll(str);
 
-			//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+			cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
 
 			if(count < 713)
 				CreateNodes(grf, streetid, nodeid, adjnodeid);
