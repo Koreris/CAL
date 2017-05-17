@@ -111,6 +111,7 @@ public:
 			{
 				if( grf.getVertexSet()[j]->getadj()[k].getdest()->getDist() < max){
 					max = grf.getVertexSet()[j]->getadj()[k].getdest()->getDist();
+					cout << grf.getVertexSet()[j]->getadj()[k].getName() << endl;
 					idchosen = grf.getVertexSet()[j]->getadj()[k].getdest()->getInfo()->getId();
 				}
 
@@ -299,10 +300,10 @@ public:
 	void setHeli(Graph<Coordenadas*> &exp, int idLocal, int idEstacao){
 		Coordenadas *A=this->findCoord(idLocal), *B=this->findCoord(idEstacao);
 
-		exp.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+		exp.addEdge(A,B, this->distancia(A,B), " "); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
 		cout << "\nO local escolhido para emergência é um Local de dificil acesso, será enviado um helicoptero!" << endl;
 
-		exp.addEdge(B,A, this->distancia(A,B));
+		exp.addEdge(B,A, this->distancia(A,B), " ");
 
 		gv->addEdge(this->streetids+=1, idLocal, idEstacao,EdgeType::UNDIRECTED);
 		gv->rearrange();
@@ -319,21 +320,17 @@ public:
 			gv->addNode(adjnodeid, B->getx(), B->gety());
 			gv->setVertexIcon(adjnodeid, "src/files/house.png");
 
+			if(findStreet(streetid) != NULL){
+				streetnametemp = findStreet(streetid)->getNome();
+			}
 
-			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
-			grf.addEdge(B,A, this->distancia(A,B));
+			grf.addEdge(A,B, this->distancia(A,B), streetnametemp); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(B,A, this->distancia(A,B), streetnametemp);
 
 			//cout << "rua: " << findStreet(streetid)->getNome();
 
 			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
-
-			if(findStreet(streetid) != NULL){
-				streetnametemp = findStreet(streetid)->getNome();
-				gv->setEdgeLabel(this->streetids,streetnametemp);
-			}
-			else{
-				gv->setEdgeLabel(this->streetids,streetnametemp);
-			}
+			gv->setEdgeLabel(this->streetids,streetnametemp);
 
 			loadImages(grf, nodeid, adjnodeid);
 
@@ -360,16 +357,16 @@ public:
 			gv->setVertexIcon(adjnodeid, "src/files/house.png");
 
 
-			grf.addEdge(A,B, this->distancia(A,B)); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
-			grf.addEdge(B,A, this->distancia(A,B));
+			grf.addEdge(A,B, this->distancia(A,B), " "); // falta atribuir o peso (que será feito com base num algoritmo de calculo de distancia vs coordenadas)
+			grf.addEdge(B,A, this->distancia(A,B), " ");
 
 
 
 			gv->addEdge(this->streetids+=1,nodeid,adjnodeid,EdgeType::UNDIRECTED);
 
-			if(findStreet(streetid) != NULL){
+			/*if(findStreet(streetid) != NULL){
 				gv->setEdgeLabel(this->streetids,findStreet(streetid)->getNome());
-			}
+			}*/
 
 
 			loadImages2(grf, nodeid,adjnodeid);
