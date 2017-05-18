@@ -97,7 +97,7 @@ void UI::menuPrincipal ()
 	return;
 }
 
-void UI::menuIntermedio ()
+int UI::menuIntermedio ()
 {
 	string user_in;
 	long user_in_;
@@ -126,12 +126,14 @@ void UI::menuIntermedio ()
 				estado_anterior = estado_atual;
 				estado_atual = estMenuLocalUrgencia;
 				menuLocalUrgencia();
+				return user_in_;
 				cls ();
 				break;
 			case 2:
 				estado_anterior = estado_atual;
 				estado_atual = estMenuPesquisa;
 				menuPesquisa();
+				return user_in_;
 				cls ();
 				break;
 			case 0:
@@ -485,6 +487,7 @@ int main()
 	int tipoEmergencia=0;
 	int gravidade=0;
 	string rua="";
+	int tipoPesquisa=0;
 	int j = 249;
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
@@ -506,7 +509,7 @@ int main()
 			break;
 
 		case estIntermedio:
-			ui.menuIntermedio();
+			tipoPesquisa=ui.menuIntermedio();
 			break;
 
 		case estMenuPesquisa:

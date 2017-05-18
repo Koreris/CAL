@@ -40,7 +40,7 @@ public:
 	int menuOpcUrgencia2();
 	int menuVazioPGrafo();
 	int menuLocalUrgencia();
-	void menuIntermedio();
+	int menuIntermedio();
 	int menuPesquisa();
 	string menuEscritaLocal();
 	virtual ~UI();
