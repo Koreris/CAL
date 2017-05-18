@@ -15,6 +15,7 @@ class Estrada
 	long int id;
 	string nome;
 	bool twoways;
+	int distance;
 
 
 public:
@@ -27,11 +28,19 @@ public:
 	void setId(long int i){this->id = i;}
 	void setNome(string n){this->nome = n;}
 	void setTwoWays(bool t){this->twoways = t;}
+	void setDistance(int d){this->distance = d;}
 
 	long int getId(){return this->id;}
 	string getNome(){return this->nome;}
 	bool getTwoWays(){return this->twoways;}
+	int getDistance() const{return this->distance;}
 
+	bool operator <(const Estrada &a)const{
+		if (this->getDistance() < a.getDistance())
+			return true;
+		else
+			return false;
+	}
 };
 
 

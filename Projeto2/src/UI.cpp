@@ -142,7 +142,7 @@ int UI::menuIntermedio ()
 			}
 		}
 	}
-	return;
+
 }
 
 int UI::menuPesquisa ()
@@ -488,6 +488,7 @@ int main()
 	int gravidade=0;
 	string rua="";
 	int tipoPesquisa=0;
+	int tipoPesquisaStr=0;
 	int j = 249;
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
@@ -513,7 +514,7 @@ int main()
 			break;
 
 		case estMenuPesquisa:
-			ui.menuPesquisa();
+			tipoPesquisaStr=ui.menuPesquisa();
 			break;
 
 		case estMenuEscrita:
@@ -523,6 +524,39 @@ int main()
 		case estVazioPGrafo:
 
 
+		if(tipoPesquisa == 1) //pesquisa forma antiga
+		{
+
+		}
+
+		else if(tipoPesquisa == 2) //pesquisa por strings
+		{
+			if(tipoPesquisaStr == 1) //pesquisa exata
+			{
+				int num = numStringMatching("src/files/B.txt",rua);
+
+				if (num == 1)
+					{
+					cout << "Rua Encontrada!" << endl;
+					cout << "Resultados: " << endl;
+					novo->SendMeAsreetAndIsearch(exp, rua);
+					}
+
+				else cout << "Rua inexistente" << endl;
+
+			}
+			else if(tipoPesquisaStr == 2) //pesquisa aproximada
+			{
+
+				cout << "Será que quis dizer: " << endl;
+				novo->updateDistanceOnStreets(rua);
+
+				cout << "Resultados: " << endl;
+				novo->SendMeAsreetAndIsearch(exp, rua);
+
+
+			}
+		}
 			novo->doDikstra(exp, idLocal);
 			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, exp);
 			if(idEstacao == idLocal) {

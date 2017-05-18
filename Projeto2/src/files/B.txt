@@ -11,7 +11,7 @@
 118;Rua da AssociaÁ„o Desportiva;False;;
 124;Rua Ricardo Reis;False;;
 129;Rua da Porfia;False;;
-161;Rua Senhor do Padr√£o;False;;
+161;Rua Senhor do Padrao;False;;
 165;Rua do Mau Pastor;False;;
 166;Rua do Mau Pastor;False;;
 167;Travessa AmÈrico de Oliveira;False;;
@@ -68,8 +68,8 @@
 590;Rua do Ermo;False;;
 591;Rua do Ermo;False;;
 599;Rua dos Malucos;False;;
-609;Rua Senhor do Padr√£o;False;;
-610;Rua Senhor do Padr√£o;False;;
+609;Rua Senhor do Padrao;False;;
+610;Rua Senhor do Padrao;False;;
 638;Rua de Palhais;False;;
 640;Rua da Figueirinha;False;;
 653;Rua das Pedrosas;False;;

@@ -9,6 +9,8 @@
 #include "Graph.h"
 #include "includes.h"
 #include "graphviewer.h"
+#include "bubbleSort.h"
+#include "matcher.h"
 #define sleep(a) Sleep(a * 1000)
 
 #ifndef DADOS_H_
@@ -22,7 +24,12 @@ class Dados
 	vector<Coordenadas*> hospitais;
 	vector<Coordenadas*> bombeiros;
 	vector<Coordenadas*> policias;
+	vector<Vertex<Coordenadas*>> todos;
 	int pos;
+
+	int FLAG_POL = 0;
+	int FLAG_BOMB = 0;
+	int FLAG_HOSP = 0;
 
 public:
 	GraphViewer *gv;
@@ -47,6 +54,94 @@ public:
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
 
+	void updateDistanceOnStreets(string choosen){
+
+		string tempStreetName;
+
+		for(unsigned int i=0; i < this->streetsVec.size(); i++){
+			this->streetsVec[i]->setDistance(editDistance(this->streetsVec[i]->getNome(), choosen));
+		}
+
+		bubbleSort(this->streetsVec);
+
+		tempStreetName = this->streetsVec[0]->getNome();
+		cout << "Nome da Rua:" << this->streetsVec[0]->getNome() << "; Distance from Word: " << this->streetsVec[0]->getDistance() << endl;
+
+		for(unsigned int i=1; i < this->streetsVec.size(); i++){
+			if(tempStreetName != this->streetsVec[i]->getNome()){
+				tempStreetName = this->streetsVec[i]->getNome();
+				cout << "(" << i << ") " << "Nome da Rua:" << this->streetsVec[i]->getNome() << "; Distance from Word: " << this->streetsVec[i]->getDistance() << endl;
+			}
+		}
+	}
+
+
+	void SendMeAsreetAndIsearch(Graph<Coordenadas*> &grf, string StreetName){
+
+		todos.clear();
+
+		for  ( unsigned int i = 0; i < grf.getVertexSet().size(); i++ )
+		{
+			for( unsigned int j = 0; j < grf.getVertexSet()[i]->getadj().size(); j++)
+			{
+				if ( grf.getVertexSet()[i]->getadj()[j].getName() == StreetName)
+				{
+					if(grf.getVertexSet()[i]->getInfo()->getId() == 165
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 434
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 144
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 642
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 523
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 313
+					) todos.push_back(grf.getVertexSet()[i]->getInfo());
+
+
+					if(grf.getVertexSet()[i]->getInfo()->getId() == 165
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 434
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 144
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 642
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 523
+					|| grf.getVertexSet()[i]->getInfo()->getId() == 313
+					) todos.push_back(grf.getVertexSet()[i]->getInfo());
+
+
+
+				}
+			}
+
+		}
+
+printServices(StreetName);
+
+	}
+
+	void printServices(string StreetName){
+
+		for (unsigned int i = 0 ; i < todos.size(); i++)
+		{
+			if(todos[i].getInfo()->getId() == 165 || todos[i].getInfo()->getId() == 434){
+				if (FLAG_POL == 0) {cout << "-> Em " << StreetName << " existe uma Esquadra PSP localizada em " << todos[i].getInfo()->getId()<< endl; FLAG_POL = 1;}
+			}
+
+			else if(todos[i].getInfo()->getId() == 144 || todos[i].getInfo()->getId() == 642){
+				if (FLAG_BOMB == 0){ cout << "-> Em " << StreetName << " existe um quartel de Bombeiros localizado em " << todos[i].getInfo()->getId()<< endl; FLAG_BOMB = 1;}
+			}
+
+			else if(todos[i].getInfo()->getId() == 523 || todos[i].getInfo()->getId() == 313){
+				if (FLAG_HOSP == 0) {cout << "-> Em " << StreetName << " existe um Hospital localizado em " << todos[i].getInfo()->getId()<< endl; FLAG_HOSP =1;}
+			}
+		}
+	}
+
+
+	/*
+	if(grf.getVertexSet()[i]->getInfo()->getId() == 165 || grf.getVertexSet()[i]->getInfo()->getId() == 434)
+							cout << "Em " << StreetName << "existe uma Esquadra PSP localizada em" << grf.getVertexSet()[i]->getInfo()->getId()	<< endl;
+						else if (grf.getVertexSet()[i]->getInfo()->getId() == 144 || grf.getVertexSet()[i]->getInfo()->getId() == 642)
+							cout << "Em " << StreetName << "existe um Quartel de Bombeiros localizado em" << grf.getVertexSet()[i]->getInfo()->getId()	<< endl;
+						else if (grf.getVertexSet()[i]->getInfo()->getId() == 523 || grf.getVertexSet()[i]->getInfo()->getId() == 313)
+							cout << "Em " << StreetName << "existe um Hospital localizado em" << grf.getVertexSet()[i]->getInfo()->getId()	<< endl;
+
+*/
 	void resetVertexIcon (bool heli)
 	{
 		if(heli)
@@ -442,7 +537,7 @@ public:
 			getline(is, str, ';');
 			adjnodeid = stoll(str);
 
-			cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
+			//cout << streetid << ";" << nodeid << ";" << adjnodeid << "\n";
 
 			if(count < 713)
 				CreateNodes(grf, streetid, nodeid, adjnodeid);
