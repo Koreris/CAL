@@ -23,8 +23,7 @@ enum states
 	estVazioPGrafo,
 	estIntermedio,
 	estMenuPesquisa,
-	estMenuExata,
-	estMenuAprox
+	estMenuEscrita
 };
 
 
@@ -42,7 +41,8 @@ public:
 	int menuVazioPGrafo();
 	int menuLocalUrgencia();
 	void menuIntermedio();
-	void menuPesquisa();
+	int menuPesquisa();
+	string menuEscritaLocal();
 	virtual ~UI();
 };
 

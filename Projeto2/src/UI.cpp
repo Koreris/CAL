@@ -87,7 +87,6 @@ void UI::menuPrincipal ()
 			case 1:
 				estado_anterior = estado_atual;
 				estado_atual = estIntermedio;
-				menuIntermedio();
 				cls ();
 				break;
 			case 0:
@@ -117,7 +116,7 @@ void UI::menuIntermedio ()
 		cin.clear ();
 		//cin.ignore(10000, '\n');
 		user_in_ = stol (user_in);
-		if (user_in_ == 1 || user_in_ == 0)
+		if (user_in_ == 1 || user_in_ == 0 || user_in_ == 2)
 		{
 			validInput = true;
 			switch (user_in_)
@@ -126,24 +125,25 @@ void UI::menuIntermedio ()
 			case 1:
 				estado_anterior = estado_atual;
 				estado_atual = estMenuLocalUrgencia;
+				menuLocalUrgencia();
 				cls ();
 				break;
 			case 2:
 				estado_anterior = estado_atual;
 				estado_atual = estMenuPesquisa;
+				menuPesquisa();
 				cls ();
 				break;
 			case 0:
 				estado_anterior=estado_atual;
 				estado_atual=estMenuPrincipal;
-				menuPrincipal();
 			}
 		}
 	}
 	return;
 }
 
-void UI::menuPesquisa ()
+int UI::menuPesquisa ()
 {
 	string user_in;
 	long user_in_;
@@ -162,30 +162,60 @@ void UI::menuPesquisa ()
 		cin.clear ();
 		//cin.ignore(10000, '\n');
 		user_in_ = stol (user_in);
-		if (user_in_ == 1 || user_in_ == 0)
+		if (user_in_ == 1 || user_in_ == 2 || user_in_==0)
 		{
 			validInput = true;
-			switch (user_in_)
+			if (user_in_ == 1 || user_in_ == 2)
 			{
-
-			case 1:
 				estado_anterior = estado_atual;
-				estado_atual = estMenuExata;
+				estado_atual = estMenuEscrita;
+				menuEscritaLocal();
 				cls ();
-				break;
-			case 2:
-				estado_anterior = estado_atual;
-				estado_atual = estMenuAprox;
-				cls ();
-				break;
-			case 0:
+				return user_in_;
+			}
+			else if (user_in_ == 0)
+			{
 				estado_anterior=estado_atual;
-				estado_atual=estMenuPrincipal;
-				menuPrincipal();
+				estado_atual=estIntermedio;
+				menuIntermedio();
 			}
 		}
 	}
-	return;
+}
+
+string UI::menuEscritaLocal()
+{
+	string user_in;
+	bool validInput = false;
+	while (!validInput)
+	{
+		cout << "\n Pesquisa Local \n\n" << endl
+				<< " +=======================================================================+" << endl
+				<< " | +.  Por favor escreva o nome da rua seguido de 'Enter'                |" << endl
+				<< " | back.  Retroceder                                                     |" << endl
+				<< " +=======================================================================+\n" << endl;
+		cout << "\n Selecao do menu:\n";
+
+		getline (cin, user_in);
+		cin.clear ();
+		//cin.ignore(10000, '\n');
+		if (user_in != "back")
+		{
+			validInput = true;
+			estado_anterior = estado_atual;
+			estado_atual = estMenuOpcUrgencia;
+			menuOpcUrgencia();
+			cls ();
+			return user_in;
+		}
+		if(user_in == "back")
+		{
+			estado_anterior=estado_atual;
+			estado_atual=estMenuPesquisa;
+			menuPesquisa();
+		}
+	}
+
 }
 
 
@@ -235,8 +265,8 @@ int UI::menuLocalUrgencia ()
 		if(user_in_ == 0)
 		{
 			estado_anterior=estado_atual;
-			estado_atual=estMenuPesquisa;
-			menuPesquisa();
+			estado_atual=estIntermedio;
+			menuIntermedio();
 		}
 	}
 }
@@ -454,6 +484,7 @@ int main()
 	int idFinal=0;
 	int tipoEmergencia=0;
 	int gravidade=0;
+	string rua="";
 	int j = 249;
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
@@ -472,6 +503,18 @@ int main()
 
 		case estMenuOpcUrgencia2:
 			gravidade=ui.menuOpcUrgencia2();
+			break;
+
+		case estIntermedio:
+			ui.menuIntermedio();
+			break;
+
+		case estMenuPesquisa:
+			ui.menuPesquisa();
+			break;
+
+		case estMenuEscrita:
+			rua = ui.menuEscritaLocal();
 			break;
 
 		case estVazioPGrafo:
