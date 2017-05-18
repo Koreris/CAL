@@ -86,7 +86,8 @@ void UI::menuPrincipal ()
 
 			case 1:
 				estado_anterior = estado_atual;
-				estado_atual = estMenuLocalUrgencia;
+				estado_atual = estIntermedio;
+				menuIntermedio();
 				cls ();
 				break;
 			case 0:
@@ -97,6 +98,100 @@ void UI::menuPrincipal ()
 	return;
 }
 
+void UI::menuIntermedio ()
+{
+	string user_in;
+	long user_in_;
+	bool validInput = false;
+	while (!validInput)
+	{
+		cout << "\n Servico de Urgencias - Local \n\n" << endl
+				<< " +=======================================================================+" << endl
+				<< " | 1.  Selecionar local exato da urgencia                                |" << endl
+				<< " | 2.  Pesquisar local por nome da rua                                   |" << endl
+				<< " | 0.  Retroceder                                                        |" << endl
+				<< " +=======================================================================+\n" << endl;
+		cout << "\n Numero selecionado do menu:\n";
+
+		getline (cin, user_in);
+		cin.clear ();
+		//cin.ignore(10000, '\n');
+		user_in_ = stol (user_in);
+		if (user_in_ == 1 || user_in_ == 0)
+		{
+			validInput = true;
+			switch (user_in_)
+			{
+
+			case 1:
+				estado_anterior = estado_atual;
+				estado_atual = estMenuLocalUrgencia;
+				cls ();
+				break;
+			case 2:
+				estado_anterior = estado_atual;
+				estado_atual = estMenuPesquisa;
+				cls ();
+				break;
+			case 0:
+				estado_anterior=estado_atual;
+				estado_atual=estMenuPrincipal;
+				menuPrincipal();
+			}
+		}
+	}
+	return;
+}
+
+void UI::menuPesquisa ()
+{
+	string user_in;
+	long user_in_;
+	bool validInput = false;
+	while (!validInput)
+	{
+		cout << "\n Servico de Urgencias - Pesquisa Local \n\n" << endl
+				<< " +=======================================================================+" << endl
+				<< " | 1.  Pesquisar nome exato da rua                                       |" << endl
+				<< " | 2.  Pesquisa aproximada do nome da rua                                |" << endl
+				<< " | 0.  Retroceder                                                        |" << endl
+				<< " +=======================================================================+\n" << endl;
+		cout << "\n Numero selecionado do menu:\n";
+
+		getline (cin, user_in);
+		cin.clear ();
+		//cin.ignore(10000, '\n');
+		user_in_ = stol (user_in);
+		if (user_in_ == 1 || user_in_ == 0)
+		{
+			validInput = true;
+			switch (user_in_)
+			{
+
+			case 1:
+				estado_anterior = estado_atual;
+				estado_atual = estMenuExata;
+				cls ();
+				break;
+			case 2:
+				estado_anterior = estado_atual;
+				estado_atual = estMenuAprox;
+				cls ();
+				break;
+			case 0:
+				estado_anterior=estado_atual;
+				estado_atual=estMenuPrincipal;
+				menuPrincipal();
+			}
+		}
+	}
+	return;
+}
+
+
+//TODO - menu pesquisa por nome  -- dentro desse menu if com o valor
+//de se é exato ou aproximada e retornar conforme
+//TODO - outro menu para apresentar os resultados
 int UI::menuLocalUrgencia ()
 {
 
@@ -111,9 +206,9 @@ int UI::menuLocalUrgencia ()
 				<< " | +.  Por favor selecione o local da urgencia                           |" << endl
 				<< " | +.  Devera ser um numero entre 1 e 767                                |" << endl
 				<< " | -.  Excluindo:                                                        |" << endl
-				<< " | -.  165, 434 - PSP                                                         |" << endl
+				<< " | -.  165, 434 - PSP                                                    |" << endl
 				<< " | -.  144, 642 - Bombeiros                                              |" << endl
-				<< " | -.  523, 313 - Hospitais                                         |" << endl
+				<< " | -.  523, 313 - Hospitais                                              |" << endl
 				<< " | 0.  Retroceder                                                        |" << endl
 				<< " +=======================================================================+\n" << endl;
 		cout << "\n Numero selecionado do menu:\n";
@@ -140,8 +235,8 @@ int UI::menuLocalUrgencia ()
 		if(user_in_ == 0)
 		{
 			estado_anterior=estado_atual;
-			estado_atual=estMenuPrincipal;
-			menuPrincipal();
+			estado_atual=estMenuPesquisa;
+			menuPesquisa();
 		}
 	}
 }

@@ -20,7 +20,11 @@ enum states
 	estMenuOpcUrgencia,
 	estMenuOpcUrgencia2,
 	estMenuLocalUrgencia,
-	estVazioPGrafo
+	estVazioPGrafo,
+	estIntermedio,
+	estMenuPesquisa,
+	estMenuExata,
+	estMenuAprox
 };
 
 
@@ -37,6 +41,8 @@ public:
 	int menuOpcUrgencia2();
 	int menuVazioPGrafo();
 	int menuLocalUrgencia();
+	void menuIntermedio();
+	void menuPesquisa();
 	virtual ~UI();
 };
 
