@@ -21,6 +21,7 @@ class Dados
 	vector<Vertex<Coordenadas*>> percurso;
 	vector<Coordenadas*> coordsVec ;
 	vector<Estrada*> streetsVec ;
+	vector<Estrada*> streetsVecfinal ;
 	vector<Coordenadas*> hospitais;
 	vector<Coordenadas*> bombeiros;
 	vector<Coordenadas*> policias;
@@ -54,9 +55,11 @@ public:
 	vector<Coordenadas*> getCoordsVec(){return this->coordsVec;}
 	vector<Estrada*> getStreetsVec(){return this->streetsVec;}
 
-	void updateDistanceOnStreets(string choosen){
+	vector<Estrada*> updateDistanceOnStreets(string choosen){
 
 		string tempStreetName;
+
+		int count = 0;
 
 		for(unsigned int i=0; i < this->streetsVec.size(); i++){
 			this->streetsVec[i]->setDistance(editDistance(this->streetsVec[i]->getNome(), choosen));
@@ -65,14 +68,21 @@ public:
 		bubbleSort(this->streetsVec);
 
 		tempStreetName = this->streetsVec[0]->getNome();
-		cout << "Nome da Rua:" << this->streetsVec[0]->getNome() << "; Distance from Word: " << this->streetsVec[0]->getDistance() << endl;
+		cout << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[0]->getNome() << "; Distance from Word: " << this->streetsVec[0]->getDistance() << endl;
+		streetsVecfinal.push_back(this->streetsVec[0]);
+
+		count++;
 
 		for(unsigned int i=1; i < this->streetsVec.size(); i++){
 			if(tempStreetName != this->streetsVec[i]->getNome()){
 				tempStreetName = this->streetsVec[i]->getNome();
-				cout << "(" << i << ") " << "Nome da Rua:" << this->streetsVec[i]->getNome() << "; Distance from Word: " << this->streetsVec[i]->getDistance() << endl;
+				cout  << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[i]->getNome() << "; Distance from Word: " << this->streetsVec[i]->getDistance() << endl;
+				streetsVecfinal.push_back(this->streetsVec[i]);
+				count++;
 			}
 		}
+
+		return streetsVecfinal;
 	}
 
 
@@ -110,11 +120,14 @@ public:
 
 		}
 
-printServices(StreetName);
+if(printServices(StreetName) ==  -1)
+	cout << "Em " << StreetName << " nao existe nenhum serviço de Emergência" << endl;
 
 	}
 
-	void printServices(string StreetName){
+	int printServices(string StreetName){
+
+		if(todos.size() == 0) return -1;
 
 		for (unsigned int i = 0 ; i < todos.size(); i++)
 		{

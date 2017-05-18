@@ -493,6 +493,7 @@ int main()
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
 
+
 	while(true)
 	{
 		switch(ui.estado_atual)
@@ -547,16 +548,27 @@ int main()
 			}
 			else if(tipoPesquisaStr == 2) //pesquisa aproximada
 			{
+				int nrRua;
 
-				cout << "Será que quis dizer: " << endl;
-				novo->updateDistanceOnStreets(rua);
+				cout << "Será que quis dizer: (Selecione o número correto)" << endl;
+				vector<Estrada*> listaRuas = novo->updateDistanceOnStreets(rua);
 
-				cout << "Resultados: " << endl;
-				novo->SendMeAsreetAndIsearch(exp, rua);
+				cin >> nrRua;
+
+				for (unsigned int i = 0; i < listaRuas.size(); i++){
+					if (i == nrRua)
+					{
+						cout << "Resultados: " << endl;
+						novo->SendMeAsreetAndIsearch(exp, listaRuas[i]->getNome());
+					}
+				}
+
 
 
 			}
 		}
+
+
 			novo->doDikstra(exp, idLocal);
 			idEstacao=estacaoMaisProxima(idLocal,tipoEmergencia, exp);
 			if(idEstacao == idLocal) {
