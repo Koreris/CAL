@@ -68,7 +68,7 @@ public:
 		bubbleSort(this->streetsVec);
 
 		tempStreetName = this->streetsVec[0]->getNome();
-		cout << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[0]->getNome() << "; Distance from Word: " << this->streetsVec[0]->getDistance() << endl;
+		cout << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[0]->getNome() << "; Distancia ao texto introduzido: " << this->streetsVec[0]->getDistance() << endl;
 		streetsVecfinal.push_back(this->streetsVec[0]);
 
 		count++;
@@ -76,7 +76,7 @@ public:
 		for(unsigned int i=1; i < this->streetsVec.size(); i++){
 			if(tempStreetName != this->streetsVec[i]->getNome()){
 				tempStreetName = this->streetsVec[i]->getNome();
-				cout  << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[i]->getNome() << "; Distance from Word: " << this->streetsVec[i]->getDistance() << endl;
+				cout  << "(" << count << ") " << "Nome da Rua:" << this->streetsVec[i]->getNome() << "; Distancia ao texto introduzido: " << this->streetsVec[i]->getDistance() << endl;
 				streetsVecfinal.push_back(this->streetsVec[i]);
 				count++;
 			}
@@ -85,6 +85,17 @@ public:
 		return streetsVecfinal;
 	}
 
+
+	int VerificarRua(string rua){
+
+		for (unsigned int i = 0; i < streetsVec.size(); i++){
+
+			if (streetsVec[i]->getNome() == rua) return 1;
+		}
+
+		return -1;
+
+	}
 
 	void SendMeAsreetAndIsearch(Graph<Coordenadas*> &grf, string StreetName){
 
@@ -219,7 +230,7 @@ if(printServices(StreetName) ==  -1)
 			{
 				if( grf.getVertexSet()[j]->getadj()[k].getdest()->getDist() < max){
 					max = grf.getVertexSet()[j]->getadj()[k].getdest()->getDist();
-					cout << grf.getVertexSet()[j]->getadj()[k].getName() << endl;
+					//cout << grf.getVertexSet()[j]->getadj()[k].getName() << endl;
 					idchosen = grf.getVertexSet()[j]->getadj()[k].getdest()->getInfo()->getId();
 				}
 

@@ -6,6 +6,7 @@
  */
 
 #include "UI.h"
+#include <chrono>
 
 /*Veiculos*/
 int AMBULANCIA = 1;
@@ -489,7 +490,6 @@ int main()
 	Graph<Coordenadas*> exp;
 	novo->loadConnectorsFile(exp);
 
-
 	while(true)
 	{
 		switch(ui.estado_atual)
@@ -676,14 +676,14 @@ int main()
 				{
 					int num = numStringMatching("src/files/B.txt",rua);
 
-					if (num == 1)
+					if (num > 0 && novo->VerificarRua(rua) == 1)
 					{
 						cout << "Rua Encontrada!" << endl;
 						cout << "Resultados: " << endl;
 						novo->SendMeAsreetAndIsearch(exp, rua);
 					}
 
-					else cout << "Rua inexistente" << endl;
+					else cout << "Rua nao encontrada." << endl;
 
 				}
 				else if(tipoPesquisaStr == 2) //pesquisa aproximada
