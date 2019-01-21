@@ -6,7 +6,7 @@ This project is a simulation of an emergency center.
 The goal is to allocate the resources (ambulances, motorcycles, helicopters) needed for each call as efficiently as possible. 
 We have used Dijkstra's algorithm.
 
-For the second part of the work we used Full-Text-Seach Techniques as also Pattern matching and String matching.
+For the second part of the project we used Full-Text-Seach Techniques as also Pattern matching and String matching.
 
 ### Technologies/Tools
 ```
