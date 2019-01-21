@@ -14,10 +14,6 @@ GraphViewer
 Eclipse
 ```
 
-### Installing
-
-Please look under Instructions file in order to run our project.
-
 ### Authors
 
 * Bernardo Leite 
